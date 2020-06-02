@@ -1,8 +1,10 @@
 package client.model;
+import client.view.*;
 import java.awt.Color;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 import comune.Ascoltatore;
 import comune.Server;
@@ -22,9 +24,7 @@ public class ClientModelConcreto implements ClientModel{
 	
 	private Console console;
 	
-	public ClientModelConcreto() throws Exception{
-		
-	}
+	
 
 
 	@Override
@@ -43,19 +43,19 @@ public class ClientModelConcreto implements ClientModel{
 		this.nomePartecipante=nomePartecipante;
 		this.indirizzoIP=ip;
 		this.ipServer=ipServer;
+		
+		System.setProperty("java.rmi.server.hostname", ip);
+		
 		String URLServer = "rmi://"+ipServer+":9000/SERVER";
 		String URLClient = "rmi://"+ip+":9001/ASCOLTATORE";
+		
 		try{
+			UnicastRemoteObject.exportObject(ascoltatore, 0);
 			registroServer = LocateRegistry.getRegistry(ipServer,9000);
-			console.esecuzione("Registry registroServer = LocateRegistry.getRegistry(ipServer,9000);");
 			registroClient = LocateRegistry.createRegistry(9001);
-			console.esecuzione("Registry registroClient = LocateRegistry.createRegistry(9000);");
 			registroClient.rebind(URLClient, ascoltatore);
-			console.esecuzione("registroClient.rebind(URLClient, ascoltatore);");
 			this.server = (Server)registroServer.lookup(URLServer);
-			console.esecuzione("this.server = (Server)registroServer.lookup(URLServer);");
 			server.registraPartecipante(nomePartecipante, ip);
-			console.esecuzione("server.registraPartecipante(nomePartecipante, ip);");
 		}catch(Exception e) {
 			console.scriviEccezione(e.toString());
 			console.scriviEsecuzione();
@@ -63,6 +63,8 @@ public class ClientModelConcreto implements ClientModel{
 	}
 
 
+	
+	
 	@Override
 	public void tiraDado() {
 		try {

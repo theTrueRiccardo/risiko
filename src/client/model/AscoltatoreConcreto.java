@@ -11,7 +11,7 @@ import client.view.OpzioneGUI;
 import client.view.RegistrazioneGUI;
 import comune.Ascoltatore;
 
-public class AscoltatoreConcreto extends UnicastRemoteObject implements Ascoltatore{
+public class AscoltatoreConcreto implements Ascoltatore{
 	
 	private RegistrazioneGUI registrazioneGUI;
 	
@@ -21,9 +21,7 @@ public class AscoltatoreConcreto extends UnicastRemoteObject implements Ascoltat
 	
 	private ClientModel clientModel;
 	
-	public AscoltatoreConcreto() throws Exception{
-		super();
-	}
+	
 
 	@Override
 	public void ascoltaRegistrazionePartecipante(String nomePartecipante) throws RemoteException{
