@@ -1,7 +1,7 @@
 package utilità;
-import risiko.*;
-import risiko.ElementiDelGioco.Figura;
-import risiko.ElementiDelGioco.Territorio;
+import server.risiko.*;
+import utilità.ElementiDelGioco.Figura;
+import utilità.ElementiDelGioco.Territorio;
 public class TestUtilità {
 
 	public static void main(String[] args) {

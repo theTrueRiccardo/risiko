@@ -1,6 +1,7 @@
 package utilità;
-import risiko.*;
 import java.util.*;
+
+import server.risiko.*;
 public abstract class MazzoAstratto implements Mazzo {
 	
 	public boolean equals(Object o) {

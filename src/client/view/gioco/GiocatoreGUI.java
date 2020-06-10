@@ -2,6 +2,18 @@ package client.view.gioco;
 import java.awt.Color;
 
 import javax.swing.*;
+
+import client.controller.gioco.ControllerBottoneAttacca;
+import client.controller.gioco.ControllerBottoneBandiera;
+import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
+import client.controller.gioco.ControllerBottoneDecrementoArmateSposta;
+import client.controller.gioco.ControllerBottoneFaseAttacco;
+import client.controller.gioco.ControllerBottoneFaseSpostamento;
+import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
+import client.controller.gioco.ControllerBottoneIncrementoArmateSposta;
+import client.controller.gioco.ControllerBottonePassa;
+import client.controller.gioco.ControllerBottoneSposta;
 public abstract class GiocatoreGUI extends JPanel {
 	
 	public abstract void settaObbiettivo(String testoObbiettivo);
@@ -20,17 +32,49 @@ public abstract class GiocatoreGUI extends JPanel {
 	
 	public abstract void settaNazioneAllaAttacco(String nazione);
 	
-	public abstract void incrementaCarriAttacco();
+	public abstract void scriviArmateAttacco(int armate);
 	
 	public abstract void settaNazioneDallaSpostaPassa(String nazione);
 	
 	public abstract void settaNazioneAllaSpostaPassa(String nazione);
 	
-	public abstract void incrementaCarriSpostaPassa();
+	public abstract void scriviArmateSposta(int armate);
 	
-	public abstract void settaArmateDisponibili(String numeroArmate);
+	public abstract void congelaArmate();
 	
-	public abstract void settaTurnista(String turnista);
+	public abstract void scongelaArmate();
+	
+	public abstract void scriviTurnista(String turnista);
+	
+	public abstract void scriviArmateDisponibili(String numeroArmate);
+	
+	
+	
+	
+	
+	
+	public abstract void setControllerBottoneCarro(ControllerBottoneCarro controllerBottoneCarro);
+	
+	public abstract void setControllerBottoneBandiera(ControllerBottoneBandiera controllerBottoneBandiera);
+	
+	public abstract void setControllerBottoneFaseAttacco(ControllerBottoneFaseAttacco controllerBottoneFaseAttacco);
+	
+	public abstract void setControllerBottoneAttacca(ControllerBottoneAttacca controllerBottoneAttacca);
+	
+	public abstract void setControllerBottoneIncrementoArmateAttacco(ControllerBottoneIncrementoArmateAttacco controllerBottoneIncrementoArmateAttacco);
+	
+	public abstract void setControllerBottoneDecrementoArmateAttacco(ControllerBottoneDecrementoArmateAttacco controllerBottoneDecrementoArmateAttacco);
+	
+	public abstract void setControllerBottoneFaseSpostamento(ControllerBottoneFaseSpostamento controllerBottoneFaseSpostamento);
+
+	public abstract void setControllerBottoneSposta(ControllerBottoneSposta controllerBottoneSposta);
+	
+	public abstract void setControllerBottoneIncrementoArmateSposta(ControllerBottoneIncrementoArmateSposta controllerBottoneIncrementoArmateSposta);
+	
+	public abstract void setControllerBottoneDecrementoArmateSposta(ControllerBottoneDecrementoArmateSposta controllerBottoneDecrementoArmateSposta);
+	
+	public abstract void setControllerBottonePassa(ControllerBottonePassa controllerBottonePassa);
+
 	
 
 }

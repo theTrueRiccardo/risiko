@@ -9,6 +9,10 @@ public interface Server extends Remote {
 	
 	void registraTiroDadoPartecipante(String nomePartecipante) throws RemoteException;
 	
+	void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy,Color coloreArmate, boolean eCarro) throws RemoteException;
+	
+	void registraPassaggioTurno() throws RemoteException;
+	
 	
 
 }

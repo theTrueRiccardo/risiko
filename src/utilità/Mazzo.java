@@ -1,6 +1,7 @@
 package utilità;
-import risiko.*;
 import java.util.*;
+
+import server.risiko.*;
 public interface Mazzo extends Iterable<Carta> {
 	
 	Carta pescaInCima();

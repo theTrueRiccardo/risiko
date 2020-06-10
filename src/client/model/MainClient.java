@@ -1,53 +1,82 @@
 package client.model;
-import client.view.*;
-import comune.Ascoltatore;
+import client.controller.gioco.ControllerApplicazione;
+import client.controller.gioco.ControllerApplicazioneConcreto;
+import client.controller.gioco.ControllerBottoneAttacca;
+import client.controller.gioco.ControllerBottoneBandiera;
+import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
+import client.controller.gioco.ControllerBottoneDecrementoArmateSposta;
+import client.controller.gioco.ControllerBottoneFaseAttacco;
+import client.controller.gioco.ControllerBottoneFaseSpostamento;
+import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
+import client.controller.gioco.ControllerBottoneIncrementoArmateSposta;
+import client.controller.gioco.ControllerBottonePassa;
+import client.controller.gioco.ControllerBottoneSposta;
+import client.controller.gioco.ControllerMappa;
+import client.controller.gioco.GloboGrafico;
+import client.controller.gioco.GloboGraficoConcreto;
+import client.controller.pregioco.*;
+import client.view.gioco.GiocoGUI;
+import client.view.gioco.GiocoGUIConcreto;
+import client.view.pregioco.*;
 import utilità.Console;
-
-import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import client.controller.*;
 
 public class MainClient {
 
 	public static void main(String[] args) throws Exception{
-		
+		GloboGrafico globoGrafico = new GloboGraficoConcreto();
 		ClientModel clientModel = new ClientModelConcreto();
+		Gioco gioco = new GiocoConcreto();
+		clientModel.setGioco(gioco);
 		Console console = new Console();
 		clientModel.setConsole(console);
 		
+		
 		RegistrazioneGUI registrazioneGUI = new RegistrazioneGUIConcreto();
-		ControllerBottoneRegistrazione controllerBottoneRegistrazione = new ControllerBottoneRegistrazione();
-		registrazioneGUI.setControllerBottoneRegistrazione(controllerBottoneRegistrazione);
-		controllerBottoneRegistrazione.setRegistrazioneGUI(registrazioneGUI);
-		controllerBottoneRegistrazione.setClientModel(clientModel);
-	
-		
 		OpzioneGUI opzioneGUI = new OpzioneGUIConcreto();
-		Controller controllerBottoneColoreArmate = new ControllerBottoneColoreArmate();
-		Controller controllerBottoneDado = new ControllerBottoneDadoTurno();
-		opzioneGUI.setControllerBottoneColoreArmate(controllerBottoneColoreArmate);
-		opzioneGUI.setControllerBottoneDado(controllerBottoneDado);
-		
-		
-		
-		
 		GiocoGUI giocoGUI = new GiocoGUIConcreto();
 		opzioneGUI.setGiocoGUI(giocoGUI);
+		
+		ControllerBottoneRegistrazione controllerBottoneRegistrazione = new ControllerBottoneRegistrazione(clientModel,gioco,registrazioneGUI);
+		ControllerBottoneColoreArmate controllerBottoneColoreArmate = new ControllerBottoneColoreArmate(clientModel, gioco);
+		ControllerBottoneDadoTurno controllerBottoneDadoTurno = new ControllerBottoneDadoTurno(clientModel, gioco);
+		registrazioneGUI.setControllerBottoneRegistrazione(controllerBottoneRegistrazione);
+		opzioneGUI.setControllerBottoneColoreArmate(controllerBottoneColoreArmate);
+		opzioneGUI.setControllerBottoneDadoTurno(controllerBottoneDadoTurno);
+		
+		
+		
+		ControllerApplicazione controllerApplicazione = new ControllerApplicazioneConcreto(giocoGUI, globoGrafico, clientModel, gioco);
+		ControllerBottoneAttacca controllerBottoneAttacca = new ControllerBottoneAttacca(controllerApplicazione);
+		ControllerBottoneBandiera controllerBottoneBandiera = new ControllerBottoneBandiera(controllerApplicazione);
+		ControllerBottoneCarro controllerBottoneCarro = new ControllerBottoneCarro(controllerApplicazione);
+		ControllerBottoneDecrementoArmateAttacco controllerBottoneDecrementoArmateAttacco = new ControllerBottoneDecrementoArmateAttacco(controllerApplicazione);
+		ControllerBottoneDecrementoArmateSposta controllerBottoneDecrementoArmateSposta = new ControllerBottoneDecrementoArmateSposta(controllerApplicazione);
+		ControllerBottoneFaseAttacco controllerBottoneFaseAttacco = new ControllerBottoneFaseAttacco(controllerApplicazione);
+		ControllerBottoneFaseSpostamento controllerBottoneFaseSpostamento = new ControllerBottoneFaseSpostamento(controllerApplicazione);
+		ControllerBottoneIncrementoArmateAttacco controllerBottoneIncrementoArmateAttacco = new ControllerBottoneIncrementoArmateAttacco(controllerApplicazione);
+		ControllerBottoneIncrementoArmateSposta controllerBottoneIncrementoArmateSposta = new ControllerBottoneIncrementoArmateSposta(controllerApplicazione);
+		ControllerBottonePassa controllerBottonePassa = new ControllerBottonePassa(controllerApplicazione);
+		ControllerBottoneSposta controllerBottoneSposta = new ControllerBottoneSposta(controllerApplicazione);
+		ControllerMappa controllerMappa = new ControllerMappa(controllerApplicazione);
+		giocoGUI.setControllerBottoneAttacca(controllerBottoneAttacca);
+		giocoGUI.setControllerBottoneBandiera(controllerBottoneBandiera);
+		giocoGUI.setControllerBottoneCarro(controllerBottoneCarro);
+		giocoGUI.setControllerBottoneDecrementoArmateAttacco(controllerBottoneDecrementoArmateAttacco);
+		giocoGUI.setControllerBottoneDecrementoArmateSposta(controllerBottoneDecrementoArmateSposta);
+		giocoGUI.setControllerBottoneFaseAttacco(controllerBottoneFaseAttacco);
+		giocoGUI.setControllerBottoneFaseSpostamento(controllerBottoneFaseSpostamento);
+		giocoGUI.setControllerBottoneIncrementoArmateAttacco(controllerBottoneIncrementoArmateAttacco);
+		giocoGUI.setControllerBottoneIncrementoArmateSposta(controllerBottoneIncrementoArmateSposta);
+		giocoGUI.setControllerBottonePassa(controllerBottonePassa);
+		giocoGUI.setControllerBottoneSposta(controllerBottoneSposta);
+		giocoGUI.setControllerMappa(controllerMappa);
+		
+		
 			
-	
-		AscoltatoreConcreto ascoltatore = new AscoltatoreConcreto();
-		ascoltatore.setClientModel(clientModel);
-		ascoltatore.setRegistrazioneGUI(registrazioneGUI);
-		ascoltatore.setOpzioneGUI(opzioneGUI);
-		ascoltatore.setGiocoGUI(giocoGUI);
 		
 		
+		AscoltatoreConcreto ascoltatore = new AscoltatoreConcreto(registrazioneGUI, opzioneGUI, giocoGUI, gioco, controllerApplicazione);
 		clientModel.setAscoltatore(ascoltatore);
 		
 			

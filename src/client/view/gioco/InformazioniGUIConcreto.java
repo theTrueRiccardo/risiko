@@ -17,8 +17,6 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 	
 	private JTextField numeroArmate, turnista;
 	
-	private int armate=0;
-	
 	
 	
 	
@@ -74,7 +72,7 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 
 
 	@Override
-	public void setTurnista(String turnista) {
+	public void scriviTurnista(String turnista) {
 		this.turnista.setText(turnista);
 	}
 
@@ -83,7 +81,7 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 
 
 	@Override
-	public void setArmateDisponibili(String numeroArmate) {
+	public void scriviArmateDisponibili(String numeroArmate) {
 		this.numeroArmate.setText(numeroArmate);
 	}
 

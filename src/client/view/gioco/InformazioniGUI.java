@@ -4,8 +4,8 @@ import javax.swing.JPanel;
 
 public abstract class InformazioniGUI extends JPanel{
 	
-	public abstract void setTurnista(String turnista);
+	public abstract void scriviTurnista(String turnista);
 	
-	public abstract void setArmateDisponibili(String numeroArmate);
+	public abstract void scriviArmateDisponibili(String numeroArmate);
 
 }

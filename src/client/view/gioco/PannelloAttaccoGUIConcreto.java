@@ -2,6 +2,7 @@ package client.view.gioco;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,15 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import client.controller.gioco.ControllerBottoneAttacca;
+import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
+import client.controller.gioco.ControllerBottoneFaseSpostamento;
+import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
+
 public class PannelloAttaccoGUIConcreto extends PannelloAttaccoGUI {
 	
-	private int armate = 0;
+	private JLabel etichettaDA,etichettaA;
 	
-	private JLabel etichettaDalla,etichettaAlla;
+	private JTextField nomeDA, nomeA, numeroArmate;
 	
-	private JTextField nomeDalla, nomeAlla, numeroArmate;
-	
-	private JButton bottoneIncremento,bottoneAttacca;
+	private JButton bottoneIncremento,bottoneDecremento,bottoneAttacca, bottoneFaseSpostamento;
 	
 
 	public PannelloAttaccoGUIConcreto() {
@@ -31,51 +35,64 @@ public class PannelloAttaccoGUIConcreto extends PannelloAttaccoGUI {
 		
 		JPanel pannello1 = new JPanel();
 		pannello1.setLayout(new BoxLayout(pannello1, BoxLayout.X_AXIS));
-		etichettaDalla = new JLabel("Dalla:");
-		nomeDalla = new JTextField();
-		nomeDalla.setEditable(false);
-		pannello1.add(etichettaDalla);
-		pannello1.add(nomeDalla);
+		etichettaDA = new JLabel("DA:");
+		nomeDA = new JTextField();
+		nomeDA.setEditable(false);
+		pannello1.add(etichettaDA);
+		pannello1.add(nomeDA);
 		
 		
 		JPanel pannello2 = new JPanel();
 		pannello2.setLayout(new BoxLayout(pannello2, BoxLayout.X_AXIS));
-		etichettaAlla = new JLabel("Alla:");
-		nomeAlla = new JTextField();
-		nomeAlla.setEditable(false);
-		pannello2.add(etichettaAlla);
-		pannello2.add(nomeAlla);
+		etichettaA = new JLabel("A:");
+		nomeA = new JTextField();
+		nomeA.setEditable(false);
+		pannello2.add(etichettaA);
+		pannello2.add(nomeA);
 		
 		
-		JPanel pannello3 = new JPanel();
-		pannello3.setLayout(new BoxLayout(pannello3, BoxLayout.X_AXIS));
-		numeroArmate= new JTextField();
+		JPanel panArmate = new JPanel();
+		panArmate.setLayout(new BoxLayout(panArmate, BoxLayout.X_AXIS));
+		JPanel panIncrementoDecremento = new JPanel();
+		panIncrementoDecremento.setLayout(new GridLayout(2,1));
+		
+		numeroArmate=new JTextField();
 		numeroArmate.setEditable(false);
 		bottoneIncremento = new JButton("+");
-		pannello3.add(numeroArmate);
-		pannello3.add(bottoneIncremento);
+		bottoneDecremento = new JButton("-");
+		panIncrementoDecremento.add(bottoneIncremento);
+		panIncrementoDecremento.add(bottoneDecremento);
+		panArmate.add(numeroArmate);
+		panArmate.add(panIncrementoDecremento);
+		
+		
+		bottoneFaseSpostamento = new JButton("Vai alla fase spostamento");
+		JPanel panBottoneFaseSpostamento = new JPanel();
+		panBottoneFaseSpostamento.setLayout(new BorderLayout());
+		panBottoneFaseSpostamento.add(bottoneFaseSpostamento);
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(pannello0);
 		add(pannello1);
 		add(pannello2);
-		add(pannello3);
+		add(panArmate);
+		add(panBottoneFaseSpostamento);
 		
 		
 	}
 
 	@Override
-	public void mostraNazioneDalla(String nomeNazione) {
-		nomeAlla.setText(nomeNazione);
+	public void mostraNazioneDA(String nomeNazione) {
+		nomeA.setText(nomeNazione);
 	}
 
 	@Override
-	public void mostraNazioneAlla(String nomeNazione) {
-		nomeDalla.setText(nomeNazione);
+	public void mostraNazioneA(String nomeNazione) {
+		nomeDA.setText(nomeNazione);
 	}
 
 	@Override
-	public void mostraIncremento() {
+	public void mostraArmate(int armate) {
 		numeroArmate.setText(armate+"");
 	}
 	
@@ -88,16 +105,36 @@ public class PannelloAttaccoGUIConcreto extends PannelloAttaccoGUI {
 		PannelloAttaccoGUI p = new PannelloAttaccoGUIConcreto();
 		frame.add(p);
 		frame.setVisible(true);
-		p.mostraNazioneDalla("Siberia");
-		p.mostraNazioneAlla("Mongolia");
+		p.mostraNazioneDA("Siberia");
+		p.mostraNazioneA("Mongolia");
 	}
 
 	@Override
 	public void reset() {
-		armate=0;
-		nomeDalla.setText("");
-		nomeAlla.setText("");
+		nomeDA.setText("");
+		nomeA.setText("");
 		numeroArmate.setText("");
+	}
+
+	@Override
+	public void setControllerBottoneAttacca(ControllerBottoneAttacca controllerBottoneAttacca) {
+		bottoneAttacca.addActionListener(controllerBottoneAttacca);
+	}
+
+	@Override
+	public void setControllerBottoneIncrementoArmateAttacco(ControllerBottoneIncrementoArmateAttacco controllerBottoneIncrementoArmateAttacco) {
+		bottoneIncremento.addActionListener(controllerBottoneIncrementoArmateAttacco);
+	}
+
+	@Override
+	public void setControllerBottoneDecrementoArmateAttacco(ControllerBottoneDecrementoArmateAttacco controllerBottoneDecrementoArmateAttacco) {
+		bottoneDecremento.addActionListener(controllerBottoneDecrementoArmateAttacco);
+		
+	}
+
+	@Override
+	public void setControllerBottoneFaseSpostamento(ControllerBottoneFaseSpostamento controllerBottoneFaseSpostamento) {
+		bottoneFaseSpostamento.addActionListener(controllerBottoneFaseSpostamento);
 	}
 
 }

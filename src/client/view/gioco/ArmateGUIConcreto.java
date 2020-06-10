@@ -12,8 +12,13 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import client.controller.gioco.ControllerBottoneBandiera;
+import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneFaseAttacco;
 
 public class ArmateGUIConcreto extends ArmateGUI {
 	
@@ -23,12 +28,16 @@ public class ArmateGUIConcreto extends ArmateGUI {
 	
 	private Color colore;
 	
+	private JButton bottoneFaseAttacco;
+	
 	public ArmateGUIConcreto() {
 		
 		JPanel panCarro = new JPanel();
 		panCarro.setLayout(new BorderLayout());
 		JPanel panBandiera = new JPanel();
 		panBandiera.setLayout(new BorderLayout());
+		JPanel panBottoneFaseAttacco = new JPanel();
+		panBottoneFaseAttacco.setLayout(new BorderLayout());
 		
 		colore = Color.WHITE;
 		
@@ -45,8 +54,13 @@ public class ArmateGUIConcreto extends ArmateGUI {
 		panBandiera.add(bottoneBandiera);
 		
 		
+		bottoneFaseAttacco=new JButton("Vai alla fase attacco");
+		panBottoneFaseAttacco.add(bottoneFaseAttacco);
+		
+		
 		add(panCarro);
 		add(panBandiera);
+		add(panBottoneFaseAttacco);
 	}
 	
 	
@@ -117,8 +131,15 @@ public class ArmateGUIConcreto extends ArmateGUI {
 	}
 	
 	
+	@Override
+	public void setControllerBottoneCarro(ControllerBottoneCarro controllerBottoneCarro) {
+		bottoneCarro.addActionListener(controllerBottoneCarro);
+	}
 	
-	
+	@Override
+	public void setControllerBottoneBandiera(ControllerBottoneBandiera controllerBottoneBandiera) {
+		bottoneBandiera.addActionListener(controllerBottoneBandiera);
+	}
 	
 	
 	
@@ -135,6 +156,28 @@ public class ArmateGUIConcreto extends ArmateGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		a.coloraArmate(Color.RED);
+	}
+
+
+	
+	
+	@Override
+	public void congela() {
+		bottoneCarro.setEnabled(false);
+		bottoneBandiera.setEnabled(false);
+	}
+
+
+	@Override
+	public void scongela() {
+		bottoneCarro.setEnabled(true);
+		bottoneBandiera.setEnabled(true);
+	}
+
+
+	@Override
+	public void setControllerBottoneFaseAttacco(ControllerBottoneFaseAttacco controllerBottoneFaseAttacco) {
+		bottoneFaseAttacco.addActionListener(controllerBottoneFaseAttacco);
 	}
 
 }

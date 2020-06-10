@@ -2,14 +2,15 @@ package client.model;
 
 import java.awt.Color;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-import javax.swing.SwingUtilities;
-
-import client.view.GiocoGUI;
-import client.view.OpzioneGUI;
-import client.view.RegistrazioneGUI;
+import client.controller.gioco.ControllerApplicazione;
+import client.controller.gioco.state.Posizionamento;
+import client.controller.gioco.state.Pre;
+import client.view.gioco.GiocoGUI;
+import client.view.pregioco.OpzioneGUI;
+import client.view.pregioco.RegistrazioneGUI;
 import comune.Ascoltatore;
+import utilità.Musica;
 
 public class AscoltatoreConcreto implements Ascoltatore{
 	
@@ -19,9 +20,19 @@ public class AscoltatoreConcreto implements Ascoltatore{
 	
 	private GiocoGUI giocoGUI;
 	
-	private ClientModel clientModel;
+	private Gioco gioco;
+	
+	private ControllerApplicazione controllerApplicazione;
 	
 	
+	public AscoltatoreConcreto(RegistrazioneGUI registrazioneGUI, OpzioneGUI opzioneGUI, GiocoGUI giocoGUI, Gioco gioco, ControllerApplicazione controllerApplicazione) {
+		this.registrazioneGUI=registrazioneGUI;
+		this.opzioneGUI=opzioneGUI;
+		this.giocoGUI=giocoGUI;
+		this.gioco=gioco;
+		this.controllerApplicazione=controllerApplicazione;
+	}
+
 
 	@Override
 	public void ascoltaRegistrazionePartecipante(String nomePartecipante) throws RemoteException{
@@ -41,7 +52,7 @@ public class AscoltatoreConcreto implements Ascoltatore{
 		else if(coloreArmate.equals(Color.BLUE)) suffisso="Blu";
 		else if(coloreArmate.equals(Color.GREEN)) suffisso="Verdi";
 		else suffisso="Viola";
-		if(clientModel.getNomePartecipante().equals(nomePartecipante))opzioneGUI.disabilitaColori();
+		if(gioco.getNomePartecipante().equals(nomePartecipante))opzioneGUI.disabilitaColori();
 		opzioneGUI.disabilitaBottone("bottoneArmate" + suffisso);
 		opzioneGUI.mostraAggiornamento(nomePartecipante + " ha scelto le armate " + suffisso);
 		
@@ -50,18 +61,22 @@ public class AscoltatoreConcreto implements Ascoltatore{
 	@Override
 	public void ascoltaRisultatoDadoTurno(String nomePartecipante,int faccia) throws RemoteException{
 		opzioneGUI.mostraAggiornamento(nomePartecipante + " ha tirato " + faccia + " con il dado del turno");
-		if(clientModel.getNomePartecipante().equals(nomePartecipante))opzioneGUI.disabilitaBottone("bottoneDado");
+		if(gioco.getNomePartecipante().equals(nomePartecipante))opzioneGUI.disabilitaBottone("bottoneDado");
 	}
 
 	@Override
-	public void ascoltaAvvioGioco(String testoObbiettivo, Color coloreArmate, String armateDisponibili, String turnista) throws RemoteException{
+	public void ascoltaAvvioGioco(String testoObbiettivo, Color coloreArmate, String armateDisponibili, String turnista, String[] posseditori) throws RemoteException{
 		opzioneGUI.mostraAggiornamento("Pronti a partire!!!!");
 		opzioneGUI.mostraContoAllaRovescia();
 		//apre la finestra di gioco
+		controllerApplicazione.setStato(Pre.STATO_PRE);
 		giocoGUI.settaObbiettivo(testoObbiettivo);
 		giocoGUI.settaColoreArmate(coloreArmate);
-		giocoGUI.settaArmateDisponibili(armateDisponibili);
-		giocoGUI.settaTurnista(turnista);
+		gioco.incrementaArmateDisponibili(Integer.parseInt(armateDisponibili));
+		gioco.setPosseditori(posseditori);
+		giocoGUI.scriviArmateDisponibili(gioco.getArmateDisponibili()+"");
+		gioco.setTurnista(turnista);
+		giocoGUI.scriviTurnista(gioco.getTurnista());
 	}
 
 
@@ -70,25 +85,45 @@ public class AscoltatoreConcreto implements Ascoltatore{
 	public void ascoltaTurni(String giocatoriOrdinati) throws RemoteException {
 		opzioneGUI.mostraAggiornamento(giocatoriOrdinati);
 	}
-	
-	
-	
-	public void setRegistrazioneGUI(RegistrazioneGUI registrazioneGUI) {
-		this.registrazioneGUI=registrazioneGUI;
+
+
+	@Override
+	public void ascoltaPosizionamentoArmata(String nomePartecipante, double percx, double percy, Color coloreArmate, boolean eCarro) throws RemoteException {
+		if(nomePartecipante.equals(gioco.getNomePartecipante())) {
+			giocoGUI.scriviArmateDisponibili(gioco.getArmateDisponibili()+"");
+		}
+		giocoGUI.disegnaArmata(percx, percy, coloreArmate, eCarro);
 	}
 
-	
-	public void setOpzioneGUI(OpzioneGUI opzioneGUI) {
-		this.opzioneGUI=opzioneGUI;
+
+	@Override
+	public void ascoltaPassaggioTurnoPre(String turnista, int rinforzi) throws RemoteException {
+		Musica.suonaColtello();
+		gioco.setTurnista(turnista);
+		gioco.incrementaArmateDisponibili(rinforzi);
+		if(turnista.equals(gioco.getNomePartecipante())) {
+			controllerApplicazione.setStato(Pre.STATO_PRE);
+		}
+		giocoGUI.scriviArmateDisponibili(gioco.getArmateDisponibili()+"");
+		giocoGUI.scriviTurnista(gioco.getTurnista());
+		giocoGUI.mostraMessaggio("E' il turno di " + gioco.getTurnista() + "!!");
+		
 	}
 
-	
-	public void setGiocoGUI(GiocoGUI giocoGUI) {
-		this.giocoGUI=giocoGUI;
+
+	@Override
+	public void ascoltaPassaggioTurno(String turnista, int rinforzi) throws RemoteException {
+		Musica.suonaColtello();
+		gioco.setTurnista(turnista);
+		gioco.incrementaArmateDisponibili(rinforzi);
+		if(turnista.equals(gioco.getNomePartecipante())) {
+			controllerApplicazione.setStato(Posizionamento.STATO_POSIZIONAMENTO);
+		}
+		giocoGUI.scriviArmateDisponibili(gioco.getArmateDisponibili()+"");
+		giocoGUI.scriviTurnista(gioco.getTurnista());
+		giocoGUI.mostraMessaggio("E' il turno di " + gioco.getTurnista() + "!!");
+		
 	}
 	
-	public void setClientModel(ClientModel clientModel) {
-		this.clientModel=clientModel;
-	}
 
 }

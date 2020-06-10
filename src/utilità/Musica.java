@@ -1,6 +1,6 @@
 package utilità;
 
-import java.io.File;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -8,33 +8,58 @@ import javax.sound.sampled.Clip;
 
 public class Musica {
 	
-	private static final String URLchitarra ="src//musiche//chitarra.wav";
+	private static Raccoglitore raccoglitore = new Raccoglitore();
 	
-	private static final String URLdado = "src//musiche//audio.wav";
-
 	private Musica() {
 	}
 	
 	public static void suonaDado() {
 		try{
-			File f = new File("src//musiche//audio.wav");
-			AudioInputStream as = AudioSystem.getAudioInputStream(f);
-			Clip clip = AudioSystem.getClip();
-			clip.open(as);
-			clip.setMicrosecondPosition(2300000);
-			clip.start();
+			URL url= raccoglitore.prendiDado();
+			suona(url,2300000);
 		}catch(Exception ex) {ex.printStackTrace();}
 	}
 	
 	public static void suonaChitarra() {
 		try{
-			File f = new File("src//musiche//chitarra.wav");
-			AudioInputStream as = AudioSystem.getAudioInputStream(f);
-			Clip clip = AudioSystem.getClip();
-			clip.open(as);
-			clip.setMicrosecondPosition(2000000);
-			clip.start();
+			URL url = raccoglitore.prendiChitarra();
+			suona(url,2000000);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	public static void suonaPanzers() {
+		try {
+			URL url = raccoglitore.prendiPanzers();
+			suona(url,2000000);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	public static void suonaPosizione() {
+		try {
+			URL url = raccoglitore.prendiPosizione();
+			suona(url,2000000);
 		}catch(Exception ex) {ex.printStackTrace();}
 	}
 
+	public static void suonaColtello() {
+		try {
+			URL url = raccoglitore.prendiColtello();
+			suona(url,2000000);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	
+	private static void suona(URL url, int sfasamento) throws Exception {
+		AudioInputStream as = AudioSystem.getAudioInputStream(url);
+		Clip clip = AudioSystem.getClip();
+		clip.open(as);
+		clip.setMicrosecondPosition(sfasamento);
+		clip.start();
+	}
+	
+	public static void main(String[] args) throws Exception {
+		Musica.suonaPanzers();
+		Musica.suonaChitarra();
+		Thread.sleep(100000000);
+  	}
 }
