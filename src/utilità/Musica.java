@@ -49,6 +49,29 @@ public class Musica {
 	}
 	
 	
+	public static void suonaAnello() {
+		try {
+			URL url = raccoglitore.prendiAnello();
+			suona(url,3900000);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	
+	public static void suonaMessaggio() {
+		try {
+			URL url = raccoglitore.prendiMessaggio();
+			suona(url,1000000);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	
+	public static void suonaGuerra() {
+		try {
+			URL url = raccoglitore.prendiGuerra();
+			suona(url,0);
+		}catch(Exception ex) {ex.printStackTrace();}
+	}
+	
 	private static void suona(URL url, int sfasamento) throws Exception {
 		AudioInputStream as = AudioSystem.getAudioInputStream(url);
 		Clip clip = AudioSystem.getClip();
@@ -58,8 +81,7 @@ public class Musica {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Musica.suonaPanzers();
-		Musica.suonaChitarra();
+		suonaGuerra();
 		Thread.sleep(100000000);
   	}
 }

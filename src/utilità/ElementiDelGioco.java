@@ -15,7 +15,6 @@ public class ElementiDelGioco {
 		private BitSet confinanti;
 		
 		
-		
 		Territorio(BitSet confinanti){
 			this.confinanti=confinanti;
 			switch(this.ordinal()) {
@@ -57,7 +56,7 @@ public class ElementiDelGioco {
 			case 35: {confinanti.set(34); confinanti.set(37); confinanti.set(36); confinanti.set(8); confinanti.set(12); confinanti.set(13); break;}
 			case 36: {confinanti.set(32); confinanti.set(0); confinanti.set(7); confinanti.set(8); confinanti.set(35); confinanti.set(37); break;}
 			case 37: {confinanti.set(33); confinanti.set(32); confinanti.set(36); confinanti.set(35); confinanti.set(34); break;}
-			case 38: {confinanti.set(11); confinanti.set(39); confinanti.set(40); break;}
+			case 38: {confinanti.set(11); confinanti.set(39); confinanti.set(40); confinanti.set(41);break;}
 			case 39: {confinanti.set(38);confinanti.set(41);confinanti.set(40); break;}
 			case 40: {confinanti.set(39); confinanti.set(41); break;}
 			case 41: {confinanti.set(38); confinanti.set(39); confinanti.set(40); break;}
@@ -149,7 +148,8 @@ public class ElementiDelGioco {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(Territorio.AFRICA_DEL_NORD);
+		System.out.println("indo: "+Territorio.INDONESIA.ordinal());
+		System.out.println("australia occ: " + Territorio.AUSTRALIA_OCCIDENTALE.ordinal());
 	}
 
 }

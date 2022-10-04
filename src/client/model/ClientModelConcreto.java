@@ -100,45 +100,37 @@ public class ClientModelConcreto implements ClientModel{
 	
 	
 	@Override
-	public void inviaMessaggio(String nomePartecipante, String messaggio) {
-		server.inviaMessaggio(nomePartecipante,messaggio);
-	}
-
-
-	
-	
-
-	@Override
-	public void registraDifensoreAttuale(String nomeDifensore) {
-		server.mostraDifensoreATutti(nomeDifensore);
-	}
-
-
-	
-	
-	
-	@Override
-	public void registraAttaccanteAttuale(String nomePartecipante) {
-		server.mostraAttaccanteATutti(nomePartecipante);
-	}
-
-
-	
-	
-	
-	@Override
-	public void registraAttacco(String attaccante, String difensore, String nomeNazioneDA, String nomeNazioneA, int armateImpiegate) {
-		server.registraAttaccoPartecipante(attaccante,difensore,nomeNazioneDA,nomeNazioneA,armateImpiegate);
-	}
-
-
-	
-	
-	
-	@Override
-	public void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy,Color coloreArmate, boolean eCarro) {
+	public void inviaMessaggio(String messaggio) {
 		try {
-			server.registraPosizionamentoArmata(nomePartecipante, percx,percy,coloreArmate,eCarro);
+			server.inviaMessaggio(messaggio);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+	
+	
+	
+	@Override
+	public void registraAttacco(String nomeNazioneDA, String nomeNazioneA, int armateImpiegate) {
+		try {
+			server.registraAttacco(nomeNazioneDA,nomeNazioneA,armateImpiegate);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	
+	
+	
+	@Override
+	public void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy,Color coloreArmate, boolean eCarro,String nazioneInteressata) {
+		try {
+			server.registraPosizionamentoArmata(nomePartecipante, percx,percy,coloreArmate,eCarro,nazioneInteressata);
 		} catch (RemoteException e) {
 			console.scriviEccezione(e.toString());
 		}
@@ -150,8 +142,12 @@ public class ClientModelConcreto implements ClientModel{
 
 
 	@Override
-	public void registraSpostamento(String nomePartecipante, String nomeNazioneDA, String nomeNazioneA,int armateImpiegate) {
-		/k
+	public void registraSpostamento(String nomeNazioneDA, String nomeNazioneA,int armateImpiegate,boolean easy) {
+		try {
+			server.registraSpostamento(nomeNazioneDA, nomeNazioneA, armateImpiegate,easy);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -174,6 +170,46 @@ public class ClientModelConcreto implements ClientModel{
 	@Override
 	public void setGioco(Gioco gioco) {
 		this.gioco=gioco;
+	}
+
+
+
+
+
+	@Override
+	public void registraFineFasePre(String nomePartecipante) {
+		try {
+			server.registraFineFasePre(nomePartecipante);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
+
+
+	@Override
+	public void verificaObbiettivo(String nomePartecipante) {
+		try {
+			server.registraVerificaObbiettivo(nomePartecipante);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
+	@Override
+	public void inviaTelegramma(String telegramma,String destinatario) {
+		try {
+			server.inviaTelegramma(telegramma, destinatario);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 

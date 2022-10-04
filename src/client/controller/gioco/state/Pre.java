@@ -26,10 +26,15 @@ public enum Pre implements State{
 	public void cliccatoCarro(ControllerApplicazione controllerApplicazione) {
 		Gioco gioco = controllerApplicazione.getGioco();
 		if(gioco.getArmateDisponibili()>0) {
-			controllerApplicazione.setStato(Modalit‡InserimentoCarroPre.STATO_MODALITA_INSERIMENTO_CARRO_PRE);
+			if(gioco.getArmatePosizionateInFasePre()<3) {
+				controllerApplicazione.setStato(Modalit‡InserimentoCarroPre.STATO_MODALITA_INSERIMENTO_CARRO_PRE);
+			}
+			else {
+				controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Hai gi‡ messo 3 armate, passa");
+			}
 		}
 		else {
-			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Hai esaurito le armate disponibili");
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Hai esaurito le armate disponibili della fase preparatoria");
 		}
 	}
 
@@ -55,10 +60,17 @@ public enum Pre implements State{
 
 	@Override
 	public void cliccatoPassa(ControllerApplicazione controllerApplicazione) {
-		if(controllerApplicazione.getGioco().getArmateDisponibili()>0) {
-			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi impiegare tutte le tue armate prima di passare");
+		if(controllerApplicazione.getGioco().getArmatePosizionateInFasePre() < 3 && controllerApplicazione.getGioco().getArmateDisponibili()>0) {
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi impiegare tutte le tue armate del turno di fase preparatoria (max 3) prima di passare");
 		}
 		else {
+			if(controllerApplicazione.getGioco().getArmateDisponibili()==0) {
+				controllerApplicazione.getClientModel().registraFineFasePre(controllerApplicazione.getGioco().getNomePartecipante());
+			}
+			else{
+				controllerApplicazione.getGioco().azzeraArmatePosizionateInFasePre();
+				controllerApplicazione.getClientModel().registraPassaggioTurno();
+			}
 			controllerApplicazione.setStato(Passato.STATO_PASSATO);
 		}
 	}

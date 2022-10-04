@@ -9,7 +9,7 @@ public interface ClientModel {
 	
 	void setGioco(Gioco gioco);
 	
-	
+	void registraFineFasePre(String nomePartecipante);
 	
 	void registraPartecipante(String nomePartecipante, String ip, String ipServer);
 	
@@ -17,20 +17,19 @@ public interface ClientModel {
 	
 	void registraTiroDadoTurno(String nomePartecipante);
 	
-	void registraAttacco(String attaccante, String difensore, String nomeNazioneDA, String nomeNazioneA, int armateImpiegate);
+	void registraAttacco(String nomeNazioneDA, String nomeNazioneA, int armateImpiegate);
 	
-	void registraAttaccanteAttuale(String nomePartecipante);
+	void registraSpostamento(String nomeNazioneDA, String nomeNazioneA, int armateImpiegate,boolean easy);
 	
-	void registraDifensoreAttuale(String nomeDifensore);
-	
-	void registraSpostamento(String nomePartecipante, String nomeNazioneDA, String nomeNazioneA, int armateImpiegate);
-	
-	void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy, Color coloreArmata, boolean eCarro);
+	void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy, Color coloreArmata, boolean eCarro,String nazioneInteressata);
 	
 	void registraPassaggioTurno();
 	
 	void setConsole(Console console);
 	
-	void inviaMessaggio(String nomePartecipante,String messaggio);
+	void inviaMessaggio(String messaggio);
 	
+	void verificaObbiettivo(String nomePartecipante);
+	
+	void inviaTelegramma(String telegramma,String destinatario);
 }

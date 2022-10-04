@@ -1,11 +1,11 @@
 package client.controller.gioco.state;
 
 import client.controller.gioco.ControllerApplicazione;
-import client.controller.gioco.GloboGrafico;
 import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilit‡.GloboGrafico;
 
 public enum Modalit‡InserimentoBandiera implements State{
 	
@@ -44,7 +44,7 @@ public enum Modalit‡InserimentoBandiera implements State{
 		
 		if(gioco.possiedeNazione(nomeNazione)) {
 			gioco.decrementaArmateDisponibili(10);
-			clientModel.registraPosizionamentoArmata(gioco.getNomePartecipante(),percx, percy,gioco.getColoreArmate(), false);
+			clientModel.registraPosizionamentoArmata(gioco.getNomePartecipante(),percx, percy,gioco.getColoreArmate(), false, nomeNazione);
 			controllerApplicazione.setStato(Posizionamento.STATO_POSIZIONAMENTO);
 		}
 		else if(nomeNazione.equals("Mare")){

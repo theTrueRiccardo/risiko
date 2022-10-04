@@ -48,12 +48,20 @@ public enum NazioneSpostaA implements State{
 	public void cliccatoSposta(ControllerApplicazione controllerApplicazione) {
 		ClientModel clientModel = controllerApplicazione.getClientModel();
 		Gioco gioco = controllerApplicazione.getGioco();
+		if(gioco.getArmateAttualmenteImpiegate()==0) {
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima decidere quante armate spostare");
+			return;
+		}
 		clientModel.registraSpostamento(
-				gioco.getNomePartecipante(), 
-				gioco.getNazioneAttaccoDA(), 
+				gioco.getNazioneSpostaDA(), 
 				gioco.getNazioneSpostaA(), 
-				gioco.getArmateAttualmenteImpiegate()
+				gioco.getArmateAttualmenteImpiegate(),
+				false
 		);
+		gioco.azzeraArmateAttualmenteImpiegate();
+		controllerApplicazione.getFinestraApplicazione().scriviArmateSposta(0);
+		controllerApplicazione.getFinestraApplicazione().scriviNazioneSpostaDA("");
+		controllerApplicazione.getFinestraApplicazione().scriviNazioneSpostaA("");
 		controllerApplicazione.setStato(PrePassa.STATO_PRE_PASSA);
 	}
 	

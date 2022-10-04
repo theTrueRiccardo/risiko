@@ -5,16 +5,17 @@ import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilità.GloboGrafico;
 
 public interface ControllerApplicazione{
 
-	void inviaMessaggio(String messaggio);
+	//questi metodi non dipendono dallo stato
+	
+	void chat();
 	
 	void apriCodaTelegrammi();
 	
-	void inviaTelegramma(String telegramma);
-	
-	void mostraCarte();
+	void inviaTelegramma();
 	
 	void mostraTerritori();
 	
@@ -28,7 +29,15 @@ public interface ControllerApplicazione{
 	
 	ClientModel getClientModel();
 	
+	State getStatoCorrente();
+	
+	void verificaObbiettivo();
+	
+	void cliccatoCarte();
+	
+	
 	//-----------------------------------------------------------------------
+	//Questi metodi dipendono dallo stato
 	
 	void cliccatoBottoneFaseAttacco();
 	

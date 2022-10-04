@@ -6,17 +6,23 @@ import java.awt.Toolkit;
 
 import javax.swing.*;
 
+import client.controller.gioco.ControllerBottoneApriCodaTelegrammi;
 import client.controller.gioco.ControllerBottoneAttacca;
 import client.controller.gioco.ControllerBottoneBandiera;
 import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneCarte;
 import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneDecrementoArmateSposta;
 import client.controller.gioco.ControllerBottoneFaseAttacco;
 import client.controller.gioco.ControllerBottoneFaseSpostamento;
 import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneIncrementoArmateSposta;
+import client.controller.gioco.ControllerBottoneInvia;
+import client.controller.gioco.ControllerBottoneInviaTelegramma;
+import client.controller.gioco.ControllerBottoneObbiettivo;
 import client.controller.gioco.ControllerBottonePassa;
 import client.controller.gioco.ControllerBottoneSposta;
+import client.controller.gioco.ControllerBottoneTerritori;
 import client.controller.gioco.ControllerMappa;
 import utilità.Musica;
 
@@ -163,7 +169,11 @@ public class GiocoGUIConcreto implements GiocoGUI {
 
 	@Override
 	public void mostraMessaggio(String messaggio) {
-		JOptionPane.showMessageDialog(null, messaggio);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JOptionPane.showMessageDialog(null, messaggio);
+			}
+		});
 	}
 
 
@@ -280,9 +290,79 @@ public class GiocoGUIConcreto implements GiocoGUI {
 
 
 	@Override
-	public void disegnaArmata(double percx, double percy, Color colore, boolean eCarro) {
-		mappaGUI.disegnaArmata(percx, percy, colore, eCarro);
+	public void disegnaArmata(double percx, double percy, Color colore, boolean eCarro,String nazione) {
+		mappaGUI.disegnaArmata(percx, percy, colore, eCarro,nazione);
 	}
+
+
+	@Override
+	public void report(String report) {
+		comunicazioneGUI.report(report);
+	}
+
+
+	@Override
+	public void setControllerBottoneTerritori(ControllerBottoneTerritori controllerBottoneTerritori) {
+		giocatoreGUI.setControllerBottoneTerritori(controllerBottoneTerritori);
+	}
+
+
+	@Override
+	public void chat(String messaggio) {
+		comunicazioneGUI.chat(messaggio);
+	}
+
+
+	@Override
+	public String getMessaggioUtente() {
+		return comunicazioneGUI.getMessaggioUtente();
+	}
+
+
+	@Override
+	public void setControllerBottoneInvia(ControllerBottoneInvia controllerBottoneInvia) {
+		comunicazioneGUI.setControllerBottoneInvia(controllerBottoneInvia);
+	}
+
+
+	@Override
+	public void cancellaArmate(int armate, String nazione) {
+		mappaGUI.cancellaArmate(armate,nazione);
+	}
+
+
+	@Override
+	public void setControllerBottoneObbiettivo(ControllerBottoneObbiettivo controllerBottoneObbiettivo) {
+		giocatoreGUI.setControllerBottoneObbiettivo(controllerBottoneObbiettivo);
+	}
+
+
+	@Override
+	public void setControllerBottoneCarte(ControllerBottoneCarte controllerBottoneCarte) {
+		giocatoreGUI.setControllerBottoneCarte(controllerBottoneCarte);
+	}
+
+
+	@Override
+	public String getDestinatario() {
+		return comunicazioneGUI.getDestinatario();
+	}
+
+
+	@Override
+	public void setControllerBottoneInviaTelegramma(ControllerBottoneInviaTelegramma controllerBottoneInviaTelegramma) {
+		comunicazioneGUI.setControllerBottoneInviaTelegramma(controllerBottoneInviaTelegramma);
+		
+	}
+
+
+	@Override
+	public void setControllerBottoneApriCodaTelegrammi(ControllerBottoneApriCodaTelegrammi controllerBottoneApriCodaTelegrammi) {
+		comunicazioneGUI.setControllerBottoneApriCodaTelegrammi(controllerBottoneApriCodaTelegrammi);
+	}
+
+
+	
 
 	
 }

@@ -1,293 +1,167 @@
 package server.risiko;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashMap;
-import java.util.Random;
 
-import server.risiko.obbiettivi.Obbiettivo;
+import utilità.CustodiaCarte;
 
 public class Risiko {
 	
-	private static int numeroPartecipanti = 1;
+	public static int numGiocatori = 1;
 	
-	private static int[] rinforziPre = new int[numeroPartecipanti];
-
-	private static String[] nazioni = {"urali", "siberia", "jacuzia", "cita", "kamchatka", "giappone", 
+	public static final ArrayList<String> nazioni = new ArrayList<String>(Arrays.asList(new String[] {
+			"urali", "siberia", "jacuzia", "cita", "kamchatka", "giappone", 
 			"mongolia", "afghanistan", "medio_oriente", "india", "cina", "siam", "africa_del_nord", 
 			"egitto", "congo", "africa_orientale", "africa_del_sud", "madagascar", "alaska", 
 			"territori_del_nord_ovest", "groenlandia", "alberta", "ontario", "quebec", 
 			"stati_uniti_occidentali", "stati_uniti_orientali", "america_centrale", "venezuela", 
-			"peru", "brasile", "argentina", "islanda", "scandinavia", "gran_bretagna", 
+			"perù", "brasile", "argentina", "islanda", "scandinavia", "gran_bretagna", 
 			"europa_occidentale", "europa_meridionale", "ucraina", "europa_settentrionale", 
-			"indonesia", "nuova_guinea", "australia_orientale", "australia_occidentale"};
-	
-	private static int[] armate = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-	
-	private static String[] proprietari = {null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, null};
+			"indonesia", "nuova_guinea", "australia_orientale", "australia_occidentale"}));
 	
 	
-	private static Obbiettivo[] obbiettivi = {};
-	
-	private static String[] giocatori = new String[numeroPartecipanti];
-	
-	private static int[] dadiTurno = new int[numeroPartecipanti];
-	
-	private static Color[] coloreArmateGiocatori = new Color[numeroPartecipanti];
-	
-	private static Obbiettivo[] obbiettiviGiocatori;
-	
-	private static int rinforzi[] = new int[numeroPartecipanti];
-	
-	private static String turnista;
-	
-	private static boolean modalitàPre;
+	public static final ArrayList<String> carte = new ArrayList<String>(Arrays.asList(new String[] {
+			"fante","cannone","cannone","cavaliere","cavaliere","fante",
+			"fante","cavaliere","cavaliere","cannone","fante","cannone","fante",
+			"cannone","fante","cavaliere","cannone","cavaliere","cavaliere",
+			"cavaliere","cannone","cannone","fante","fante",
+			"fante","cannone","cavaliere","cannone",
+			"cavaliere","fante","cannone","cannone","cavaliere","fante",
+			"cavaliere","cannone","fante","cavaliere",
+			"fante","fante","cavaliere","cannone","jolly","jolly"}));
 	
 	
 	
+	public static final String[] obbiettivi = {
+			"Devi distruggere le armate rosse. Se sei tu stesso il proprietario delle armate rosse o nessuno ha (più) le armate rosse, devi conquistare 24 territori",
+			"Devi distruggere le armate gialle. Se sei tu stesso il proprietario delle armate gialle o nessuno ha (più) le armate gialle, devi conquistare 24 territori",
+			"Devi distruggere le armate verdi. Se sei tu stesso il proprietario delle armate verdi o nessuno ha (più) le armate verdi, devi conquistare 24 territori",
+			"Devi distruggere le armate blu. Se sei tu stesso il proprietario delle armate blu o nessuno ha (più) le armate blu, devi conquistare 24 territori",
+			"Devi distruggere le armate viola. Se sei tu stesso il proprietario delle armate viola o nessuno ha (più) le armate viola, devi conquistare 24 territori",
+			"Devi distruggere le armate nere. Se sei tu stesso il proprietario delle armate nere o nessuno ha (più) le armate nere, devi conquistare 24 territori",
+			"Devi conquistare 24 territori",
+			"Devi conquistare Nord America e Africa",
+			"Devi conquistare Nord America e Oceania",
+			"Devi conquistare Asia e Africa",
+			"Devi conquistare Asia e Sud America",
+			"Devi conquistare Europa, Sud America e un terzo continente a tua scelta",
+			"Devi conquistare Europa, Oceania e un terzo continente a tua scelta",
+			"Devi conquistare 18 territori e metterci sopra almeno 2 armate ciascuno"
+			};
 	
-	public static void inserisciGiocatore(String nomePartecipante) {
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i]==null) {
-				giocatori[i] = nomePartecipante;
-				break;
-			}
+	
+	public static void init() {
+		vitaGiocatori.set(0, numGiocatori);
+		
+		Africa.set(nazioni.indexOf("egitto"));
+		Africa.set(nazioni.indexOf("africa_del_nord"));
+		Africa.set(nazioni.indexOf("africa_del_sud"));
+		Africa.set(nazioni.indexOf("congo"));
+		Africa.set(nazioni.indexOf("madagascar"));
+		Africa.set(nazioni.indexOf("africa_orientale"));
+		
+		Asia.set(nazioni.indexOf("urali"));
+		Asia.set(nazioni.indexOf("siberia"));
+		Asia.set(nazioni.indexOf("jacuzia"));
+		Asia.set(nazioni.indexOf("cita"));
+		Asia.set(nazioni.indexOf("kamchatka"));
+		Asia.set(nazioni.indexOf("giappone"));
+		Asia.set(nazioni.indexOf("mongolia"));
+		Asia.set(nazioni.indexOf("afghanistan"));
+		Asia.set(nazioni.indexOf("medio_oriente"));
+		Asia.set(nazioni.indexOf("india"));
+		Asia.set(nazioni.indexOf("india"));
+		Asia.set(nazioni.indexOf("cina"));
+		Asia.set(nazioni.indexOf("siam"));
+		
+		America_Del_Nord.set(nazioni.indexOf("alaska"));
+		America_Del_Nord.set(nazioni.indexOf("territori_del_nord_ovest"));
+		America_Del_Nord.set(nazioni.indexOf("groenlandia"));
+		America_Del_Nord.set(nazioni.indexOf("alberta"));
+		America_Del_Nord.set(nazioni.indexOf("ontario"));
+		America_Del_Nord.set(nazioni.indexOf("quebec"));
+		America_Del_Nord.set(nazioni.indexOf("stati_uniti_occidentali"));
+		America_Del_Nord.set(nazioni.indexOf("stati_uniti_orientali"));
+		America_Del_Nord.set(nazioni.indexOf("america_centrale"));
+		
+		America_Del_Sud.set(nazioni.indexOf("venezuela"));
+		America_Del_Sud.set(nazioni.indexOf("venezuela"));
+		America_Del_Sud.set(nazioni.indexOf("brasile"));
+		America_Del_Sud.set(nazioni.indexOf("argentina"));
+		
+		Europa.set(nazioni.indexOf("islanda"));
+		Europa.set(nazioni.indexOf("scandinavia"));
+		Europa.set(nazioni.indexOf("gran_bretagna"));
+		Europa.set(nazioni.indexOf("europa_occidentale"));
+		Europa.set(nazioni.indexOf("europa_meridionale"));
+		Europa.set(nazioni.indexOf("ucraina"));
+		Europa.set(nazioni.indexOf("europa_settentrionale"));
+		
+		Oceania.set(nazioni.indexOf("indonesia"));
+		Oceania.set(nazioni.indexOf("nuova_guinea"));
+		Oceania.set(nazioni.indexOf("australia_orientale"));
+		Oceania.set(nazioni.indexOf("australia_occidentale"));
+		
+		for(int i = 0; i <numGiocatori; i++) {
+			dadiTurnoGiocatori.add(0);
+			coloriGiocatori.add(null);
+			indiceGiocatoriOrdinati[i]=i;
+			primaConquistaTurnoGiocatori.set(i);
+			cartePosseduteAttualmenteDaiGiocatori[i]=new CustodiaCarte();
+			nazioniGiocatori.add(new BitSet(42));
+			giocatoriUccisiGiocatori.add(new BitSet(numGiocatori));
 		}
-	}
-	
-	
-	public static void registraColoreArmateGiocatore(String nomePartecipante, Color coloreArmate) {
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(nomePartecipante)) {
-				coloreArmateGiocatori[i] = coloreArmate;
-				break;
-			}
-		}
-	}
-	
-	
-	public static void registraTiroDadoTurnoGiocatore(String nomePartecipante) {
-		Random r = new Random();
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(nomePartecipante)) {
-				dadiTurno[i] = r.nextInt(6)+1;
-				break;
-			}
-		}
-	}
-	
-	
-	
-	public static int getDadoTurnoPartecipante(String nomePartecipante) {
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(nomePartecipante)) {
-				return dadiTurno[i];
-			}
-		}
-		return -1;
-	}
-	
-	
-	public static void posizionaArmata(String nazione, boolean eCarro) {
-		int numArmate = (eCarro==true) ? 1 : 10;
-		for(int i = 0; i < nazioni.length; i++) {
-			if(nazioni[i].equals(nazione)) {
-				armate[i]+=numArmate;
-				break;
-			}
-		}
-	}
-	
-	
-	public static String getTurnista() {
-		return turnista;
-	}
-	
-	
-	public static void gestisciPassaggioTurno() {
-		int index = 0;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(turnista)) {
-				index = i;
-				break;
-			}
-		}
-		index = (index+1)%giocatori.length;
-		turnista = giocatori[index];
-	}
-	
-	
-	public static boolean gestisciAttacco(String attaccante, String nazioneDA, String nazioneA, int numArmateAttaccanti) {
-		Random r = new Random();
-		int[] dadiRossi = new int[numArmateAttaccanti];
-		for(int i = 0; i < dadiRossi.length; i++) {
-			dadiRossi[i] = r.nextInt(6)+1;
-		}
-		Arrays.sort(dadiRossi);
-		int numArmateDifensore = 0;
-		int indiceNazioneA = 0;
-		int indiceNazioneDA = 0;
-		for(int i = 0; i < nazioni.length; i++) {
-			if(nazioni[i].equals(nazioneA)) {
-				indiceNazioneA = i;
-			}
-			if(nazioni[i].equals(nazioneDA)) {
-				indiceNazioneDA = i;
-			}
-		}
-		int armateTotaliNazioneA = armate[indiceNazioneA];
-		if(armateTotaliNazioneA >=3) numArmateDifensore = 3;
-		else numArmateDifensore = armateTotaliNazioneA;
-		int[] dadiBlu = new int[numArmateDifensore];
-		Arrays.sort(dadiBlu);
-		int perditeAttaccante = 0, perditeDifensore = 0;
-		for(int i = 0 ; i < dadiBlu.length; i++) {
-			if(dadiRossi[i] <= dadiBlu[i]) perditeAttaccante++;
-			else perditeDifensore++;
-		}
-		armate[indiceNazioneA] -= perditeDifensore;
-		armate[indiceNazioneDA] -= perditeAttaccante;
-		if(armate[indiceNazioneA] == 0) {
-			proprietari[indiceNazioneA] = attaccante;
-		}
-		int indiceObbiettivo = 0;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(attaccante)) {
-				indiceObbiettivo = i;
-				break;
-			}
-		}
-		return obbiettivi[indiceObbiettivo].eSoddisfatto();
-	}
-	
-	
-	public boolean gestisciSpostamento(String spostante, String nazioneDA, String nazioneA, int numArmateSpostanti) {
-		int indiceNazioneA = 0;
-		int indiceNazioneDA = 0;
-		for(int i = 0; i < nazioni.length; i++) {
-			if(nazioni[i].equals(nazioneA)) {
-				indiceNazioneA = i;
-			}
-			if(nazioni[i].equals(nazioneDA)) {
-				indiceNazioneDA = i;
-			}
-		}
-		armate[indiceNazioneDA]-=numArmateSpostanti;
-		armate[indiceNazioneA] += numArmateSpostanti;
-		int indiceObbiettivo = 0;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(spostante)) {
-				indiceObbiettivo = i;
-				break;
-			}
-		}
-		return obbiettivi[indiceObbiettivo].eSoddisfatto();
-	}
-
-	
-	public static void ordinaGiocatori() {
-		boolean scambi = true;
-		while(scambi) {
-			scambi = false;
-			for(int i = 0; i < dadiTurno.length-1; i++) {
-				int park = 0;
-				String parkString = "";
-				Color parkColor = null;
-				if(dadiTurno[i]>dadiTurno[i+1]) {
-					park=dadiTurno[i+1];
-					parkString = giocatori[i+1];
-					parkColor = coloreArmateGiocatori[i+1];
-					dadiTurno[i+1] = dadiTurno[i];
-					giocatori[i+1] = giocatori[i];
-					coloreArmateGiocatori[i+1] = coloreArmateGiocatori[i];
-					dadiTurno[i] = park;
-					giocatori[i]=parkString;
-					coloreArmateGiocatori[i] = parkColor;
-					scambi=true;
-				}
-			}
-		}
-	}
-	
-	
-	public static String getGiocatori() {
-		String ris = "";
-		for(int i = 0; i < giocatori.length; i++) {
-			ris= ris +i+":"+giocatori[i]+"\n";
-		}
-		return ris;
-	}
-	
-	
-	public static boolean prontiTutti() {
-		int registrati = 0;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i]!=null) registrati++;
-		}
-		if(registrati < numeroPartecipanti) return false;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(dadiTurno[i]==0 || coloreArmateGiocatori[i]==null) return false;
-		}
-		return true;
-	}
-	
-	
-	
-	public static int getRinforzi(String giocatore) {
-		int indice = 0;
-		for(int i = 0; i < giocatori.length; i++) {
-			if(giocatori[i].equals(giocatore)) {
-				indice = i;
-				break;
-			}
-		}
-		return rinforzi[indice];
-	}
-	
-	
-	
-	
-	public static boolean pre() {
-		return modalitàPre;
-	}
-	
-	
-	
-	public static HashMap<String,Object[]> informazioniGiocatori(){
-		HashMap<String,Object[]> ris = new HashMap<String,Object[]>();
-		for(int i = 0; i < giocatori.length; i++) {
-			Object[] informazioni = new Object[3];
-			informazioni[0] = obbiettivi[i].toString();
-			informazioni[1] = coloreArmateGiocatori[i];
-			informazioni[2] = rinforzi[i] + "";
-			ris.put(giocatori[i], informazioni);
-		}
-		return ris;
-	}
-	
-	
-	public static String[] getPosseditori() {
-		return Arrays.copyOf(proprietari, proprietari.length);
-	}
-	
-	public static void avviaGioco() {
-		int armatePre=0;
-		switch(numeroPartecipanti) {
-		case 3: armatePre = 35; break;
-		case 4: armatePre= 30;break;
-		case 5: armatePre = 25;break;
-		case 6: armatePre = 20; break;
-		default: armatePre = 10; break;
-		}
-		for(int i = 0; i < rinforziPre.length; i++) {
-			rinforziPre[i]=armatePre;
-		}
-		obbiettiviGiocatori=RisikoUtils.distribuisciObbiettivi(giocatori, obbiettivi);
-		RisikoUtils.assegnaTerritori(proprietari,nazioni,giocatori);
 		
 	}
+	
+	
+	
+	
+	
+	public static int[] armateSulleNazioni = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+	
+	public static BitSet vitaGiocatori = new BitSet(numGiocatori);
+	
+	//(rosso,giallo,verde,blu,nero,viola)
+	/*
+	 * al rosso corrisponde il codice 0, al giallo il codice 1, etc..
+	 */
+	public static BitSet coloriScelti = new BitSet(6);
+	//come compaiono sopra
+	public static BitSet obbiettiviScelti = new BitSet(14);
+	//come compaiono sopra
+	public static BitSet nazioniScelte = new BitSet(42);
+	public static BitSet carteDate=new BitSet(44);
+	
+
+	public static BitSet Africa = new BitSet(42);
+	public static BitSet Oceania = new BitSet(42);
+	public static BitSet America_Del_Sud = new BitSet(42);
+	public static BitSet America_Del_Nord = new BitSet(42);
+	public static BitSet Asia = new BitSet(42);
+	public static BitSet Europa = new BitSet(42);
+	
+	
+
+	public static ArrayList<String> giocatori = new ArrayList<String>();
+	public static ArrayList<BitSet> nazioniGiocatori = new ArrayList<BitSet>();
+	public static ArrayList<Integer> dadiTurnoGiocatori = new ArrayList<Integer>();
+	public static ArrayList<Color> coloriGiocatori = new ArrayList<Color>();
+	public static ArrayList<BitSet> giocatoriUccisiGiocatori = new ArrayList<BitSet>();
+	public static ArrayList<Integer> obbiettiviGiocatori = new ArrayList<Integer>();
+	public static BitSet primaConquistaTurnoGiocatori=new BitSet(numGiocatori);
+	public static BitSet fineFasePre = new BitSet(numGiocatori);
+	public static int armateGiocatoriSullaMappa[] = new int[numGiocatori];   //armateGiocatoriSullaMappa[i] == 0 -----> giocatori.get(i) è morto
+	public static int indiceGiocatoriOrdinati[] = new int[numGiocatori];
+	public static CustodiaCarte[] cartePosseduteAttualmenteDaiGiocatori=new CustodiaCarte[numGiocatori];
+	
+	
+	public static String turnista;
+	
+	
+
 }

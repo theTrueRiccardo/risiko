@@ -1,11 +1,11 @@
 package client.controller.gioco.state;
 
 import client.controller.gioco.ControllerApplicazione;
-import client.controller.gioco.GloboGrafico;
 import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilit‡.GloboGrafico;
 
 public enum Modalit‡InserimentoCarro implements State{
 	
@@ -45,7 +45,7 @@ public enum Modalit‡InserimentoCarro implements State{
 		
 		if(gioco.possiedeNazione(nomeNazione)) {
 			gioco.decrementaArmateDisponibili(1);
-			clientModel.registraPosizionamentoArmata(gioco.getNomePartecipante(),percx, percy,gioco.getColoreArmate(), true);
+			clientModel.registraPosizionamentoArmata(gioco.getNomePartecipante(),percx, percy,gioco.getColoreArmate(), true, nomeNazione);
 			controllerApplicazione.setStato(Posizionamento.STATO_POSIZIONAMENTO);
 		}
 		else if(nomeNazione.equals("Mare")){

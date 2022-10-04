@@ -1,6 +1,7 @@
 package client.model;
 
 import java.awt.Color;
+import java.util.BitSet;
 
 public interface Gioco {
 	
@@ -15,7 +16,7 @@ public interface Gioco {
 	
 	Color getColoreArmate();
 	
-	
+	void azzeraArmateAttualmenteImpiegate();
 	
 	void setNazioneAttaccoA(String nazioneAttaccoA);
 	void setNazioneAttaccoDA(String nazioneAttaccoDA);
@@ -28,8 +29,7 @@ public interface Gioco {
 	String getNazioneAttaccoA();
 	String getNazioneSpostaDA();
 	String getNazioneSpostaA();
-	String getPosseditoreNazione(String nomeNazione);
-	
+	String getTerritori();
 	
 	void decrementaArmateDisponibili(int numero);
 	void incrementaArmateDisponibili(int numero);
@@ -55,7 +55,26 @@ public interface Gioco {
 	
 	boolean possiedeNazione(String nomeNazione);
 
-	void setPosseditori(String[] posseditori);
+	void setPossedimenti(BitSet possedimenti);
 	
+	
+	void incrementaArmatePosizionateInFasePre();
+	void azzeraArmatePosizionateInFasePre();
+	int getArmatePosizionateInFasePre();
+	
+	
+	void setArmateSulleNazioni(int[] armateSulleNazioni);
+	
+	void settaPresaCarta();
+	boolean haPresoCarta();
+	void daiCarta(String carta);
+	void cacciaCarte(int codiceCombinazione);
+	String listaCarte();
+	
+	String getTelegrammi();
+	void inserisciTelegramma(String telegramma);
+	
+	void setConquista(boolean c);
+	boolean eConquista();
 
 }

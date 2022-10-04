@@ -2,22 +2,34 @@ package client.view.gioco;
 
 import java.awt.Color;
 
+import client.controller.gioco.ControllerBottoneApriCodaTelegrammi;
 import client.controller.gioco.ControllerBottoneAttacca;
 import client.controller.gioco.ControllerBottoneBandiera;
 import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneCarte;
 import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneDecrementoArmateSposta;
 import client.controller.gioco.ControllerBottoneFaseAttacco;
 import client.controller.gioco.ControllerBottoneFaseSpostamento;
 import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneIncrementoArmateSposta;
+import client.controller.gioco.ControllerBottoneInvia;
+import client.controller.gioco.ControllerBottoneInviaTelegramma;
+import client.controller.gioco.ControllerBottoneObbiettivo;
 import client.controller.gioco.ControllerBottonePassa;
 import client.controller.gioco.ControllerBottoneSposta;
+import client.controller.gioco.ControllerBottoneTerritori;
 import client.controller.gioco.ControllerMappa;
 
 public interface GiocoGUI {
+	
+	void chat(String messaggio);
+	
+	String getMessaggioUtente();
 
 	void apriFinestra();
+	
+	void cancellaArmate(int armate, String nazione);
 	
 	void settaObbiettivo(String testoObbiettivo);
 	
@@ -47,7 +59,7 @@ public interface GiocoGUI {
 	
 	void scongelaArmate();
 	
-	void disegnaArmata(double percx, double percy, Color colore, boolean eCarro);
+	void disegnaArmata(double percx, double percy, Color colore, boolean eCarro,String nazione);
 	
 	void scriviTurnista(String turnista);
 	
@@ -59,8 +71,10 @@ public interface GiocoGUI {
 	
 	int getAltezzaMappa();
 	
+	void report(String report);
 	
-	
+	String getDestinatario();
+
 	
 	
 	
@@ -88,5 +102,16 @@ public interface GiocoGUI {
 	
 	void setControllerMappa(ControllerMappa controllerMappa);
 	
+	void setControllerBottoneTerritori(ControllerBottoneTerritori controllerBottoneTerritori);
+	
+	void setControllerBottoneInvia(ControllerBottoneInvia controllerBottoneInvia);
+	
+	void setControllerBottoneObbiettivo(ControllerBottoneObbiettivo controllerBottoneObbiettivo);
+	
+	void setControllerBottoneInviaTelegramma(ControllerBottoneInviaTelegramma controllerBottoneInviaTelegramma);
+	
+	void setControllerBottoneCarte(ControllerBottoneCarte controllerBottoneCarte);
+	
+	void setControllerBottoneApriCodaTelegrammi(ControllerBottoneApriCodaTelegrammi controllerBottoneApriCodaTelegrammi);
 	
 }

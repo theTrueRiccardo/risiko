@@ -9,6 +9,9 @@ public class Raccoglitore {
 	private final String panzers = "panzers.wav";
 	private final String posizione = "posizione.wav";
 	private final String coltello = "coltello.wav";
+	private final String anello = "anello.wav";
+	private final String messaggio = "messaggio.wav";
+	private final String guerra = "guerra.wav";
 	
 	public URL prendiChitarra(){
 		return getClass().getClassLoader().getResource(chitarra);
@@ -28,6 +31,18 @@ public class Raccoglitore {
 	
 	public URL prendiColtello() {
 		return getClass().getClassLoader().getResource(coltello);
+	}
+	
+	public URL prendiAnello() {
+		return getClass().getClassLoader().getResource(anello);
+	}
+	
+	public URL prendiMessaggio() {
+		return getClass().getClassLoader().getResource(messaggio);
+	}
+	
+	public URL prendiGuerra() {
+		return getClass().getClassLoader().getResource(guerra);
 	}
 
 }

@@ -1,10 +1,10 @@
 package client.controller.gioco.state;
 
 import client.controller.gioco.ControllerApplicazione;
-import client.controller.gioco.GloboGrafico;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilità.GloboGrafico;
 
 public enum FaseAttacco implements State{
 	

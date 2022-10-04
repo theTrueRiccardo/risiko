@@ -29,7 +29,6 @@ public class PannelloSpostaGUIConcreto extends PannelloSpostaGUI {
 		JPanel pannello0 = new JPanel();
 		pannello0.setLayout(new BorderLayout());
 		bottoneSposta = new JButton("Sposta");
-		bottoneSposta.setEnabled(false);
 		pannello0.add(bottoneSposta);
 		
 		JPanel pannello1 = new JPanel();

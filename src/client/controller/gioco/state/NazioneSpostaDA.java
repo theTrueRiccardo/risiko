@@ -1,10 +1,10 @@
 package client.controller.gioco.state;
 
 import client.controller.gioco.ControllerApplicazione;
-import client.controller.gioco.GloboGrafico;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilità.GloboGrafico;
 
 public enum NazioneSpostaDA implements State{
 	
@@ -55,7 +55,7 @@ public enum NazioneSpostaDA implements State{
 		else {
 			finestraApplicazione.scriviNazioneSpostaA(nomeNazione);
 			gioco.setNazioneSpostaA(nomeNazione);
-			controllerApplicazione.setStato(NazioneAttaccoA.STATO_NAZIONE_ATTACCO_A);
+			controllerApplicazione.setStato(NazioneSpostaA.STATO_NAZIONE_SPOSTA_A);
 		}
 	}
 

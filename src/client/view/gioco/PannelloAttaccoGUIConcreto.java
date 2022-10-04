@@ -30,7 +30,6 @@ public class PannelloAttaccoGUIConcreto extends PannelloAttaccoGUI {
 		JPanel pannello0 = new JPanel();
 		pannello0.setLayout(new BorderLayout());
 		bottoneAttacca = new JButton("Attacca");
-		bottoneAttacca.setEnabled(false);
 		pannello0.add(bottoneAttacca);
 		
 		JPanel pannello1 = new JPanel();
@@ -83,12 +82,12 @@ public class PannelloAttaccoGUIConcreto extends PannelloAttaccoGUI {
 
 	@Override
 	public void mostraNazioneDA(String nomeNazione) {
-		nomeA.setText(nomeNazione);
+		nomeDA.setText(nomeNazione);
 	}
 
 	@Override
 	public void mostraNazioneA(String nomeNazione) {
-		nomeDA.setText(nomeNazione);
+		nomeA.setText(nomeNazione);
 	}
 
 	@Override

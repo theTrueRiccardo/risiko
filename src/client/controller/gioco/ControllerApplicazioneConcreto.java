@@ -1,10 +1,13 @@
 package client.controller.gioco;
 
+import javax.swing.JOptionPane;
+
 import client.controller.gioco.state.State;
 import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilità.GloboGrafico;
 
 
 public class ControllerApplicazioneConcreto implements ControllerApplicazione {
@@ -33,33 +36,45 @@ public class ControllerApplicazioneConcreto implements ControllerApplicazione {
 
 
 	@Override
-	public void inviaMessaggio(String messaggio) {
-		// TODO Auto-generated method stub
-		
+	public void chat() {
+		String messaggio = giocoGUI.getMessaggioUtente();
+		if(messaggio.equals("")) {
+			JOptionPane.showMessageDialog(null, "Devi prima scrivere qualcosa");
+			return;
+		}
+		String daMandare = gioco.getNomePartecipante() + ": " + messaggio;
+		clientModel.inviaMessaggio(daMandare);
 	}
 	@Override
 	public void apriCodaTelegrammi() {
-		// TODO Auto-generated method stub
-		
+		String tel=gioco.getTelegrammi();
+		giocoGUI.report(tel);
 	}
 	@Override
-	public void inviaTelegramma(String telegramma) {
-		// TODO Auto-generated method stub
-		
+	public void inviaTelegramma() {
+		String telegramma="Da "+gioco.getNomePartecipante()+":\n";
+		String destinatario=giocoGUI.getDestinatario();
+		telegramma+=giocoGUI.getMessaggioUtente();
+		clientModel.inviaTelegramma(telegramma,destinatario);
 	}
 	@Override
-	public void mostraCarte() {
-		// TODO Auto-generated method stub
-		
+	public void verificaObbiettivo() {
+		clientModel.verificaObbiettivo(gioco.getNomePartecipante());
+	}
+	@Override
+	public void cliccatoCarte() {
+		String carte=gioco.listaCarte();
+		giocoGUI.report(carte);
 	}
 	@Override
 	public void mostraTerritori() {
-		// TODO Auto-generated method stub
-		
+		String listaTerritori = gioco.getTerritori();
+		giocoGUI.report(listaTerritori);
 	}
 	@Override
 	public void setStato(State stato) {
 		this.statoCorrente=stato;
+		giocoGUI.report("Sei nello stato di " + stato);
 	}
 	@Override
 	public GiocoGUI getFinestraApplicazione() {
@@ -77,7 +92,6 @@ public class ControllerApplicazioneConcreto implements ControllerApplicazione {
 	public ClientModel getClientModel() {
 		return clientModel;
 	}
-	
 	
 	
 	//--------------------------------------------------
@@ -136,6 +150,12 @@ public class ControllerApplicazioneConcreto implements ControllerApplicazione {
 	public void cliccatoDecrementoSposta() {
 		statoCorrente.cliccatoDecrementoSposta(this);
 	}
+	@Override
+	public State getStatoCorrente() {
+		return statoCorrente;
+	}
+	
+	
 	
 	
 

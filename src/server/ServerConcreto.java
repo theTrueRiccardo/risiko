@@ -1,73 +1,73 @@
 package server;
 import java.awt.Color;
-import java.rmi.*;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 
-import comune.Ascoltatore;
 import comune.Server;
+import server.risiko.AssegnaColoreArmateGiocatore;
+import server.risiko.Attacco;
+import server.risiko.AvviaGioco;
+import server.risiko.FineFasePre;
+import server.risiko.InserisciGiocatore;
+import server.risiko.InviaMessaggio;
+import server.risiko.InviaTelegramma;
+import server.risiko.PassaTurno;
+import server.risiko.PosizionaArmata;
 import server.risiko.Risiko;
+import server.risiko.Spostamento;
+import server.risiko.TiraDadoTurnoGiocatore;
+import server.risiko.VerificaObbiettivo;
 
 
 
 public class ServerConcreto extends UnicastRemoteObject implements Server{
 	
 	private Notificatore notificatore;
-
+	
+	private Motore motore;
+	
+	private MotoreEasy motoreEasy;
 	
 	public ServerConcreto() throws RemoteException {
 		super();
+		Risiko.init();
 		notificatore = new NotificatoreConcreto();
+		motore = new MotoreConcreto();
+		motoreEasy=new MotoreEasyConcreto();
+		Thread threadMotore = new Thread(motore);
+		Thread threadMotoreEasy=new Thread(motoreEasy);
+		threadMotoreEasy.start();
+		threadMotore.start();
 	}
 
 	
 	
 	@Override
 	public void registraPartecipante(String nomePartecipante, String indirizzoIP) throws RemoteException {
-		System.out.println("Si è registrato " + nomePartecipante);
-		Risiko.inserisciGiocatore(nomePartecipante);
-		String URL = "rmi://"+indirizzoIP+":9001/ASCOLTATORE";
-		Registry registroClient = LocateRegistry.getRegistry(indirizzoIP,9001);
-		try {
-			Ascoltatore ascoltatore = (Ascoltatore)registroClient.lookup(URL);
-			System.out.println("fatta la lookup");
-			notificatore.registraAscoltatoreClient(nomePartecipante, ascoltatore);
-			System.out.println("Si è registrato " + nomePartecipante);
-		}catch(Exception e) {e.printStackTrace();}
+		motore.schedula(new InserisciGiocatore(nomePartecipante, indirizzoIP, notificatore));
 	}
 	
 	
 
 	@Override
 	public void registraColoreArmatePartecipante(String nomePartecipante, Color coloreArmate) throws RemoteException {
-		Risiko.registraColoreArmateGiocatore(nomePartecipante, coloreArmate);
-		notificatore.notificaSceltaColoreArmatePartecipante(nomePartecipante, coloreArmate);
-		System.out.println(nomePartecipante + " ha scelto le armate " + coloreArmate);
-		if(Risiko.prontiTutti()) {
-			avviaGioco();
-		}
+		motore.schedula(new AssegnaColoreArmateGiocatore(nomePartecipante, coloreArmate, notificatore));
+		motore.schedula(new AvviaGioco(notificatore));
 	}
 	
 	
 
 	@Override
 	public void registraTiroDadoPartecipante(String nomePartecipante) throws RemoteException {
-		Risiko.registraTiroDadoTurnoGiocatore(nomePartecipante);
-		int faccia = Risiko.getDadoTurnoPartecipante(nomePartecipante);
-		notificatore.notificaRisultatoDadoTurno(nomePartecipante, faccia);
-		System.out.println(nomePartecipante + " ha tirato " + faccia);
-		if(Risiko.prontiTutti()) {
-			avviaGioco();
-		}
+		motore.schedula(new TiraDadoTurnoGiocatore(nomePartecipante, notificatore));
+		motore.schedula(new AvviaGioco(notificatore));
 	}
 
 	
 	
 	@Override
-	public void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy, Color coloreArmate, boolean eCarro) throws RemoteException {
-		notificatore.notificaPosizionamentoArmata(nomePartecipante, percx, percy, coloreArmate, eCarro);
+	public void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy, Color coloreArmate, boolean eCarro,String nazioneInteressata) throws RemoteException {
+		motore.schedula(new PosizionaArmata(nomePartecipante, eCarro, percx, percy, coloreArmate, nazioneInteressata, notificatore));
 	}
 	
 	
@@ -75,27 +75,51 @@ public class ServerConcreto extends UnicastRemoteObject implements Server{
 
 	@Override
 	public void registraPassaggioTurno() throws RemoteException {
-		Risiko.gestisciPassaggioTurno();
-		String turnista = Risiko.getTurnista();
-		int rinforzi = Risiko.getRinforzi(turnista);
-		if(Risiko.pre()) {
-			notificatore.notificaPassaggioTurnoPre(turnista, rinforzi);
-		}
-		else {
-			notificatore.notificaPassaggioTurno(turnista, rinforzi);
-		}
-		
+		motore.schedula(new PassaTurno(notificatore));
 	}
 
-	
-	private void avviaGioco() throws RemoteException{
-		Risiko.ordinaGiocatori();
-		String giocatoriOrdinati = Risiko.getGiocatori();
-		notificatore.notificaOrdinamentoTurni(giocatoriOrdinati);
-		Risiko.avviaGioco();
-		HashMap<String,Object[]> infoGiocatori = Risiko.informazioniGiocatori(); //per ogni partecipante (String) tutte le sue informazioni (dentro Giocatore)
-		String turnista = Risiko.getTurnista();
-		String[] posseditori = Risiko.getPosseditori();
-		notificatore.notificaAvvioGioco(infoGiocatori,turnista,posseditori);
+
+
+	@Override
+	public void registraFineFasePre(String nomePartecipante) throws RemoteException {
+		motore.schedula(new FineFasePre(nomePartecipante, notificatore));
 	}
+
+
+
+	@Override
+	public void inviaMessaggio(String messaggio) throws RemoteException {
+		motoreEasy.schedulaEasy(new InviaMessaggio(messaggio,notificatore));
+	}
+
+
+
+	@Override
+	public void registraAttacco(String nazioneDA, String nazioneA, int armateImpiegate) throws RemoteException {
+		motore.schedula(new Attacco(nazioneDA,nazioneA,armateImpiegate,notificatore));
+	}
+
+
+
+	@Override
+	public void registraSpostamento(String nazioneDA, String nazioneA, int armateImpiegate,boolean easy) throws RemoteException {
+		if(easy)motoreEasy.schedulaEasy(new Spostamento(nazioneDA,nazioneA,armateImpiegate,notificatore));
+		else motore.schedula(new Spostamento(nazioneDA,nazioneA,armateImpiegate,notificatore));
+	}
+
+
+
+	@Override
+	public void registraVerificaObbiettivo(String nomePartecipante) throws RemoteException {
+		motore.schedula(new VerificaObbiettivo(nomePartecipante, notificatore));
+	}
+
+
+
+	@Override
+	public void inviaTelegramma(String telegramma, String destinatario) throws RemoteException {
+		motoreEasy.schedulaEasy(new InviaTelegramma(telegramma,destinatario,notificatore));
+	}
+
+
 }

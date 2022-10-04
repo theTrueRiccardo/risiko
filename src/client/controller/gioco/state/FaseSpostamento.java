@@ -1,10 +1,10 @@
 package client.controller.gioco.state;
 
 import client.controller.gioco.ControllerApplicazione;
-import client.controller.gioco.GloboGrafico;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
+import utilità.GloboGrafico;
 
 public enum FaseSpostamento implements State{
 
@@ -55,7 +55,7 @@ public enum FaseSpostamento implements State{
 			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi spostarti da una nazione non tua");
 		}
 		else {
-			finestraApplicazione.scriviNazioneAttaccoDA(nomeNazione);
+			finestraApplicazione.scriviNazioneSpostaDA(nomeNazione);
 			gioco.setNazioneSpostaDA(nomeNazione);
 			controllerApplicazione.setStato(NazioneSpostaDA.STATO_NAZIONE_SPOSTA_DA);
 		}

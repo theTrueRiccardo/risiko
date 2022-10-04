@@ -1,6 +1,7 @@
 package client.view.gioco;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
@@ -14,7 +15,9 @@ public abstract class MappaGUI extends JComponent {
 		addMouseListener(controllerMappa);
 	}
 	
-	public abstract void disegnaArmata(double percx, double percy, Color colore, boolean eCarro);
+	public abstract void disegnaArmata(double percx, double percy, Color colore, boolean eCarro,String nazione);
+	
+	public abstract void cancellaArmate(int armate, String nazione);
 	
 	
 

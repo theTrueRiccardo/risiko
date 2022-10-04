@@ -42,14 +42,20 @@ public enum NazioneAttaccoA implements State{
 	@Override
 	public void cliccatoAttacca(ControllerApplicazione controllerApplicazione) {
 		Gioco gioco = controllerApplicazione.getGioco();
+		if(gioco.getArmateAttualmenteImpiegate()==0) {
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima decidere con quante armate attaccare");
+			return;
+		}
 		ClientModel clientModel = controllerApplicazione.getClientModel();
 		clientModel.registraAttacco(
-				gioco.getNomePartecipante(),
-				gioco.getDifensoreAttuale(),
 				gioco.getNazioneAttaccoDA(),
 				gioco.getNazioneAttaccoA(),
 				gioco.getArmateAttualmenteImpiegate()
 		);
+		gioco.azzeraArmateAttualmenteImpiegate();
+		controllerApplicazione.getFinestraApplicazione().scriviArmateAttacco(0);
+		controllerApplicazione.getFinestraApplicazione().scriviNazioneAttaccoA("");
+		controllerApplicazione.getFinestraApplicazione().scriviNazioneAttaccoDA("");
 		controllerApplicazione.setStato(FaseAttacco.STATO_FASE_ATTACCO);
 	}
 

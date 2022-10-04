@@ -22,6 +22,8 @@ public class MainServer {
 		registro = LocateRegistry.createRegistry(9000);
 		registro.rebind("rmi://"+ipHamachi+":9000/SERVER", server);
 		System.out.println("SERVER AVVIATO");
+		//Logger logger=new Logger();
+		//logger.start();
 		
 	}
 

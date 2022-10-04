@@ -5,13 +5,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
+import client.controller.gioco.ControllerBottoneCarte;
+import client.controller.gioco.ControllerBottoneObbiettivo;
+import client.controller.gioco.ControllerBottoneTerritori;
 
 public class InformazioniGUIConcreto extends InformazioniGUI {
 
-	private JButton bottoneTerritori,bottoneCarte;
+	private JButton bottoneTerritori,bottoneCarte, bottoneObbiettivo;
 	
 	private JLabel etichettaArmate, etichettaTurno;
 	
@@ -30,6 +32,7 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 		add(pan1);
 		
 		JPanel pan2 = new JPanel();
+		pan2.setLayout(new BoxLayout(pan2,BoxLayout.X_AXIS));
 		etichettaArmate = new JLabel("Armate disponibili:",JLabel.RIGHT);
 		numeroArmate = new JTextField("        ");
 		numeroArmate.setEditable(false);
@@ -43,6 +46,7 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 		add(pan3);
 		
 		JPanel pan4 = new JPanel();
+		pan4.setLayout(new BoxLayout(pan4,BoxLayout.X_AXIS));
 		etichettaTurno=new JLabel("Turno:",JLabel.RIGHT);
 		turnista = new JTextField("        ");
 		turnista.setEditable(false);
@@ -50,7 +54,8 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 		pan4.add(turnista);
 		add(pan4);
 		
-		
+		bottoneObbiettivo=new JButton("Verifica obbiettivo");
+		add(bottoneObbiettivo);
 	}
 	
 	
@@ -65,6 +70,8 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 		InformazioniGUI ig = new InformazioniGUIConcreto();
 		f.add(ig);
 		f.setVisible(true);
+		ig.scriviArmateDisponibili(100+"");
+		ig.scriviTurnista("francoooo");
 	}
 
 
@@ -83,6 +90,33 @@ public class InformazioniGUIConcreto extends InformazioniGUI {
 	@Override
 	public void scriviArmateDisponibili(String numeroArmate) {
 		this.numeroArmate.setText(numeroArmate);
+	}
+
+
+
+
+
+	@Override
+	public void setControllerBottoneTerritori(ControllerBottoneTerritori controllerBottoneTerritori) {
+		bottoneTerritori.addActionListener(controllerBottoneTerritori);
+	}
+
+
+
+
+
+	@Override
+	public void setControllerBottoneObbiettivo(ControllerBottoneObbiettivo controllerBottoneObbiettivo) {
+		bottoneObbiettivo.addActionListener(controllerBottoneObbiettivo);
+	}
+
+
+
+
+
+	@Override
+	public void setControllerBottoneCarte(ControllerBottoneCarte controllerBottoneCarte) {
+		bottoneCarte.addActionListener(controllerBottoneCarte);
 	}
 
 }

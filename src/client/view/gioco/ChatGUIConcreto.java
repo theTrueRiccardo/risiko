@@ -10,6 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import client.controller.gioco.ControllerBottoneInvia;
+
 public class ChatGUIConcreto extends ChatGUI{
 
 	private JTextArea area;
@@ -17,8 +19,6 @@ public class ChatGUIConcreto extends ChatGUI{
 	private JTextField inserire;
 	
 	private JButton bottoneInvia;
-	
-	private String messaggi="";
 	
 	public ChatGUIConcreto() {
 		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -41,10 +41,8 @@ public class ChatGUIConcreto extends ChatGUI{
 	}
 
 	@Override
-	public void mostraMessaggio(String messaggio) {
-		String daMettere = "-"+messaggio+"\n";
-		messaggi+=daMettere;
-		area.setText(messaggi);
+	public void chat(String messaggio) {
+		area.append(messaggio+"\n");
 	}
 	
 	public static void main(String[] args) {
@@ -56,8 +54,20 @@ public class ChatGUIConcreto extends ChatGUI{
 		frame.add(cg);
 		frame.setVisible(true);
 		for(int i = 0; i < 100; i++) {
-			cg.mostraMessaggio("aru culu");
+			cg.chat("aru culu");
 		}
+	}
+
+	@Override
+	public String getMessaggioUtente() {
+		String ris = inserire.getText();
+		inserire.setText("");
+		return ris;
+	}
+
+	@Override
+	public void setControllerBottoneInvia(ControllerBottoneInvia controllerBottoneInvia) {
+		bottoneInvia.addActionListener(controllerBottoneInvia);
 	}
 
 }

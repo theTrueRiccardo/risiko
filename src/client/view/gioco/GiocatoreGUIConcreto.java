@@ -12,14 +12,17 @@ import javax.swing.SwingUtilities;
 import client.controller.gioco.ControllerBottoneAttacca;
 import client.controller.gioco.ControllerBottoneBandiera;
 import client.controller.gioco.ControllerBottoneCarro;
+import client.controller.gioco.ControllerBottoneCarte;
 import client.controller.gioco.ControllerBottoneDecrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneDecrementoArmateSposta;
 import client.controller.gioco.ControllerBottoneFaseAttacco;
 import client.controller.gioco.ControllerBottoneFaseSpostamento;
 import client.controller.gioco.ControllerBottoneIncrementoArmateAttacco;
 import client.controller.gioco.ControllerBottoneIncrementoArmateSposta;
+import client.controller.gioco.ControllerBottoneObbiettivo;
 import client.controller.gioco.ControllerBottonePassa;
 import client.controller.gioco.ControllerBottoneSposta;
+import client.controller.gioco.ControllerBottoneTerritori;
 
 public class GiocatoreGUIConcreto extends GiocatoreGUI {
 	
@@ -219,6 +222,21 @@ public class GiocatoreGUIConcreto extends GiocatoreGUI {
 	@Override
 	public void scriviArmateDisponibili(String numeroArmate) {
 		informazioniGUI.scriviArmateDisponibili(numeroArmate);
+	}
+
+	@Override
+	public void setControllerBottoneTerritori(ControllerBottoneTerritori controllerBottoneTerritori) {
+		informazioniGUI.setControllerBottoneTerritori(controllerBottoneTerritori);
+	}
+
+	@Override
+	public void setControllerBottoneObbiettivo(ControllerBottoneObbiettivo controllerBottoneObbiettivo) {
+		informazioniGUI.setControllerBottoneObbiettivo(controllerBottoneObbiettivo);
+	}
+
+	@Override
+	public void setControllerBottoneCarte(ControllerBottoneCarte controllerBottoneCarte) {
+		informazioniGUI.setControllerBottoneCarte(controllerBottoneCarte);
 	}
 
 	
