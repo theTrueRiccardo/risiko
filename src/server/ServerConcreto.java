@@ -43,82 +43,82 @@ public class ServerConcreto extends UnicastRemoteObject implements Server{
 	
 	
 	@Override
-	public void registraPartecipante(String nomePartecipante, String indirizzoIP) throws RemoteException {
-		motore.schedula(new InserisciGiocatore(nomePartecipante, indirizzoIP, notificatore));
+	public void registerPlayer(String namePlayer, String addressIP) throws RemoteException {
+		motore.schedula(new InserisciGiocatore(namePlayer, addressIP, notificatore));
 	}
 	
 	
 
 	@Override
-	public void registraColoreArmatePartecipante(String nomePartecipante, Color coloreArmate) throws RemoteException {
-		motore.schedula(new AssegnaColoreArmateGiocatore(nomePartecipante, coloreArmate, notificatore));
+	public void registerColorPlayer(String namePlayer, Color color) throws RemoteException {
+		motore.schedula(new AssegnaColoreArmateGiocatore(namePlayer, color, notificatore));
 		motore.schedula(new AvviaGioco(notificatore));
 	}
 	
 	
 
 	@Override
-	public void registraTiroDadoPartecipante(String nomePartecipante) throws RemoteException {
-		motore.schedula(new TiraDadoTurnoGiocatore(nomePartecipante, notificatore));
+	public void registerDicePlayer(String namePlayer) throws RemoteException {
+		motore.schedula(new TiraDadoTurnoGiocatore(namePlayer, notificatore));
 		motore.schedula(new AvviaGioco(notificatore));
 	}
 
 	
 	
 	@Override
-	public void registraPosizionamentoArmata(String nomePartecipante,double percx, double percy, Color coloreArmate, boolean eCarro,String nazioneInteressata) throws RemoteException {
-		motore.schedula(new PosizionaArmata(nomePartecipante, eCarro, percx, percy, coloreArmate, nazioneInteressata, notificatore));
+	public void registerLocationArmy(String namePlayer,double percx, double percy,Color color, boolean isCarro, String nation) throws RemoteException {
+		motore.schedula(new PosizionaArmata(namePlayer, isCarro, percx, percy, color, nation, notificatore));
 	}
 	
 	
 	
 
 	@Override
-	public void registraPassaggioTurno() throws RemoteException {
+	public void registerPassTurn() throws RemoteException {
 		motore.schedula(new PassaTurno(notificatore));
 	}
 
 
 
 	@Override
-	public void registraFineFasePre(String nomePartecipante) throws RemoteException {
-		motore.schedula(new FineFasePre(nomePartecipante, notificatore));
+	public void registerEndPreparation(String namePlayer) throws RemoteException {
+		motore.schedula(new FineFasePre(namePlayer, notificatore));
 	}
 
 
 
 	@Override
-	public void inviaMessaggio(String messaggio) throws RemoteException {
-		motoreEasy.schedulaEasy(new InviaMessaggio(messaggio,notificatore));
+	public void sentMessage(String message) throws RemoteException {
+		motoreEasy.schedulaEasy(new InviaMessaggio(message,notificatore));
 	}
 
 
 
 	@Override
-	public void registraAttacco(String nazioneDA, String nazioneA, int armateImpiegate) throws RemoteException {
-		motore.schedula(new Attacco(nazioneDA,nazioneA,armateImpiegate,notificatore));
+	public void registerAttack(String nationFrom, String nationTo, int armyUsed) throws RemoteException {
+		motore.schedula(new Attacco(nationFrom,nationTo,armyUsed,notificatore));
 	}
 
 
 
 	@Override
-	public void registraSpostamento(String nazioneDA, String nazioneA, int armateImpiegate,boolean easy) throws RemoteException {
-		if(easy)motoreEasy.schedulaEasy(new Spostamento(nazioneDA,nazioneA,armateImpiegate,notificatore));
+	public void registerMovement(String nationFrom, String nationTo, int armyUsed,boolean easy) throws RemoteException {
+		if(easy)motoreEasy.schedulaEasy(new Spostamento(nationFrom,nationTo,armyUsed,notificatore));
 		else motore.schedula(new Spostamento(nazioneDA,nazioneA,armateImpiegate,notificatore));
 	}
 
 
 
 	@Override
-	public void registraVerificaObbiettivo(String nomePartecipante) throws RemoteException {
-		motore.schedula(new VerificaObbiettivo(nomePartecipante, notificatore));
+	public void registerCheckObjective(String namePlayer) throws RemoteException {
+		motore.schedula(new VerificaObbiettivo(namePlayer, notificatore));
 	}
 
 
 
 	@Override
-	public void inviaTelegramma(String telegramma, String destinatario) throws RemoteException {
-		motoreEasy.schedulaEasy(new InviaTelegramma(telegramma,destinatario,notificatore));
+	public void sentTelegram(String telegram,String recipient) throws RemoteException {
+		motoreEasy.schedulaEasy(new InviaTelegramma(telegram,recipient,notificatore));
 	}
 
 
