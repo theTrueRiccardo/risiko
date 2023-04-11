@@ -43,31 +43,31 @@ public class ServerConcreto extends UnicastRemoteObject implements Server{
 	
 	
 	@Override
-	public void registerPlayer(String namePlayer, String addressIP) throws RemoteException {
-		motore.schedula(new InserisciGiocatore(namePlayer, addressIP, notificatore));
+	public void registerPlayer(String playerName, String addressIP) throws RemoteException {
+		motore.schedula(new InserisciGiocatore(playerName, addressIP, notificatore));
 	}
 	
 	
 
 	@Override
-	public void registerColorPlayer(String namePlayer, Color color) throws RemoteException {
-		motore.schedula(new AssegnaColoreArmateGiocatore(namePlayer, color, notificatore));
+	public void registerColorPlayer(String playerName, Color color) throws RemoteException {
+		motore.schedula(new AssegnaColoreArmateGiocatore(playerName, color, notificatore));
 		motore.schedula(new AvviaGioco(notificatore));
 	}
 	
 	
 
 	@Override
-	public void registerDicePlayer(String namePlayer) throws RemoteException {
-		motore.schedula(new TiraDadoTurnoGiocatore(namePlayer, notificatore));
+	public void registerDicePlayer(String playerName) throws RemoteException {
+		motore.schedula(new TiraDadoTurnoGiocatore(playerName, notificatore));
 		motore.schedula(new AvviaGioco(notificatore));
 	}
 
 	
 	
 	@Override
-	public void registerLocationArmy(String namePlayer,double percx, double percy,Color color, boolean isCarro, String nation) throws RemoteException {
-		motore.schedula(new PosizionaArmata(namePlayer, isCarro, percx, percy, color, nation, notificatore));
+	public void registerLocationArmy(String playerName,double percx, double percy,Color color, boolean isCarro, String nation) throws RemoteException {
+		motore.schedula(new PosizionaArmata(playerName, isCarro, percx, percy, color, nation, notificatore));
 	}
 	
 	
@@ -81,8 +81,8 @@ public class ServerConcreto extends UnicastRemoteObject implements Server{
 
 
 	@Override
-	public void registerEndPreparation(String namePlayer) throws RemoteException {
-		motore.schedula(new FineFasePre(namePlayer, notificatore));
+	public void registerEndPreparation(String playerName) throws RemoteException {
+		motore.schedula(new FineFasePre(playerName, notificatore));
 	}
 
 
@@ -95,23 +95,23 @@ public class ServerConcreto extends UnicastRemoteObject implements Server{
 
 
 	@Override
-	public void registerAttack(String nationFrom, String nationTo, int armyUsed) throws RemoteException {
-		motore.schedula(new Attacco(nationFrom,nationTo,armyUsed,notificatore));
+	public void registerAttack(String nationFrom, String nationTo, int usedArmy) throws RemoteException {
+		motore.schedula(new Attacco(nationFrom,nationTo,usedArmy,notificatore));
 	}
 
 
 
 	@Override
-	public void registerMovement(String nationFrom, String nationTo, int armyUsed,boolean easy) throws RemoteException {
-		if(easy)motoreEasy.schedulaEasy(new Spostamento(nationFrom,nationTo,armyUsed,notificatore));
+	public void registerMovement(String nationFrom, String nationTo, int usedArmy,boolean easy) throws RemoteException {
+		if(easy)motoreEasy.schedulaEasy(new Spostamento(nationFrom,nationTo,usedArmy,notificatore));
 		else motore.schedula(new Spostamento(nazioneDA,nazioneA,armateImpiegate,notificatore));
 	}
 
 
 
 	@Override
-	public void registerCheckObjective(String namePlayer) throws RemoteException {
-		motore.schedula(new VerificaObbiettivo(namePlayer, notificatore));
+	public void registerCheckObjective(String playerName) throws RemoteException {
+		motore.schedula(new VerificaObbiettivo(playerName, notificatore));
 	}
 
 
