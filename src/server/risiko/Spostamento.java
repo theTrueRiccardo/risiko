@@ -3,10 +3,10 @@ package server.risiko;
 import java.awt.Color;
 
 import server.Notificatore;
-import utilità.GloboGrafico;
-import utilità.GloboGraficoConcreto;
-import utilità.NazioneGrafica;
-import utilità.Rettangolo;
+import utilita.GloboGrafico;
+import utilita.GloboGraficoConcreto;
+import utilita.NazioneGrafica;
+import utilita.Rettangolo;
 
 public class Spostamento extends AzioneAstratta{
 	

@@ -11,10 +11,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import client.view.gioco.MappaGUIConcreto;
-import utilità.GloboGrafico;
-import utilità.GloboGraficoConcreto;
-import utilità.Rettangolo;
-import utilità.RettangoloConcreto;
+import utilita.GloboGrafico;
+import utilita.GloboGraficoConcreto;
+import utilita.Rettangolo;
+import utilita.RettangoloConcreto;
 
 public class Test {
 

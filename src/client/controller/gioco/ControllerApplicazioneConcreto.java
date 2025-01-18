@@ -7,7 +7,7 @@ import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
-import utilità.GloboGrafico;
+import utilita.GloboGrafico;
 
 
 public class ControllerApplicazioneConcreto implements ControllerApplicazione {

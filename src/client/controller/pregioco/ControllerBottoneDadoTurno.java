@@ -3,7 +3,7 @@ package client.controller.pregioco;
 import java.awt.event.ActionEvent;
 import client.model.ClientModel;
 import client.model.Gioco;
-import utilità.Musica;
+import utilita.Musica;
 
 public class ControllerBottoneDadoTurno extends ControllerPreGioco{
 	

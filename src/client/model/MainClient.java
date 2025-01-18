@@ -28,9 +28,9 @@ import client.view.pregioco.OpzioneGUI;
 import client.view.pregioco.OpzioneGUIConcreto;
 import client.view.pregioco.RegistrazioneGUI;
 import client.view.pregioco.RegistrazioneGUIConcreto;
-import utilità.Console;
-import utilità.GloboGrafico;
-import utilità.GloboGraficoConcreto;
+import utilita.Console;
+import utilita.GloboGrafico;
+import utilita.GloboGraficoConcreto;
 
 public class MainClient {
 

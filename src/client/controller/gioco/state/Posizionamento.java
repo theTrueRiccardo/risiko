@@ -36,7 +36,7 @@ public enum Posizionamento implements State{
 			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non hai armate sufficienti per posizionare una bandiera");
 		}
 		else {
-			controllerApplicazione.setStato(Modalit‡InserimentoBandiera.STATO_MODALITA_INSERIMENTO_BANDIERA);
+			controllerApplicazione.setStato(ModalitaInserimentoBandiera.STATO_MODALITA_INSERIMENTO_BANDIERA);
 		}
 	}
 
@@ -47,7 +47,7 @@ public enum Posizionamento implements State{
 			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non hai armate sufficienti per posizionare un carro");
 		}
 		else {
-			controllerApplicazione.setStato(Modalit‡InserimentoCarro.STATO_MODALITA_INSERIMENTO_CARRO);
+			controllerApplicazione.setStato(ModalitaInserimentoCarro.STATO_MODALITA_INSERIMENTO_CARRO);
 		}
 		
 	}

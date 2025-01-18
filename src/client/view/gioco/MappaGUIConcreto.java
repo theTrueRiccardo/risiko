@@ -12,10 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import utilità.GloboGrafico;
-import utilità.GloboGraficoConcreto;
-import utilità.NazioneGrafica;
-import utilità.Rettangolo;
+import utilita.GloboGrafico;
+import utilita.GloboGraficoConcreto;
+import utilita.NazioneGrafica;
+import utilita.Rettangolo;
 
 public class MappaGUIConcreto extends MappaGUI{
 

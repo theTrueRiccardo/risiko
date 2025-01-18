@@ -16,7 +16,7 @@ import client.view.gioco.GiocoGUI;
 import client.view.pregioco.OpzioneGUI;
 import client.view.pregioco.RegistrazioneGUI;
 import comune.Ascoltatore;
-import utilità.Musica;
+import utilita.Musica;
 
 public class AscoltatoreConcreto implements Ascoltatore{
 	

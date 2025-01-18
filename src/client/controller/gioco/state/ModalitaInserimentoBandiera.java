@@ -5,9 +5,9 @@ import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
-import utilit‡.GloboGrafico;
+import utilita.GloboGrafico;
 
-public enum Modalit‡InserimentoBandiera implements State{
+public enum ModalitaInserimentoBandiera implements State{
 	
 	STATO_MODALITA_INSERIMENTO_BANDIERA;
 
@@ -24,7 +24,7 @@ public enum Modalit‡InserimentoBandiera implements State{
 			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non hai sufficienti armate per posizionare un carro");
 		}
 		else{
-			controllerApplicazione.setStato(Modalit‡InserimentoCarro.STATO_MODALITA_INSERIMENTO_CARRO);
+			controllerApplicazione.setStato(ModalitaInserimentoCarro.STATO_MODALITA_INSERIMENTO_CARRO);
 		}
 	}
 

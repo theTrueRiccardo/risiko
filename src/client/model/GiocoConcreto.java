@@ -7,8 +7,8 @@ import java.util.BitSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import utilità.ElementiDelGioco;
-import utilità.ElementiDelGioco.Territorio;
+import utilita.ElementiDelGioco;
+import utilita.ElementiDelGioco.Territorio;
 
 public class GiocoConcreto implements Gioco{
 	

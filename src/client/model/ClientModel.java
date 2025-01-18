@@ -2,7 +2,7 @@ package client.model;
 import java.awt.Color;
 
 import comune.Ascoltatore;
-import utilità.Console;
+import utilita.Console;
 public interface ClientModel {
 	
 	void setAscoltatore(Ascoltatore ascoltatore);

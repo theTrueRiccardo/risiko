@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 import server.Notificatore;
-import utilità.GloboGrafico;
-import utilità.GloboGraficoConcreto;
-import utilità.NazioneGrafica;
-import utilità.Rettangolo;
+import utilita.GloboGrafico;
+import utilita.GloboGraficoConcreto;
+import utilita.NazioneGrafica;
+import utilita.Rettangolo;
 
 public class AvviaGioco extends AzioneAstratta{
 	

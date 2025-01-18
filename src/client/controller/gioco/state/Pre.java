@@ -27,7 +27,7 @@ public enum Pre implements State{
 		Gioco gioco = controllerApplicazione.getGioco();
 		if(gioco.getArmateDisponibili()>0) {
 			if(gioco.getArmatePosizionateInFasePre()<3) {
-				controllerApplicazione.setStato(ModalitàInserimentoCarroPre.STATO_MODALITA_INSERIMENTO_CARRO_PRE);
+				controllerApplicazione.setStato(ModalitaInserimentoCarroPre.STATO_MODALITA_INSERIMENTO_CARRO_PRE);
 			}
 			else {
 				controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Hai già messo 3 armate, passa");

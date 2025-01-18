@@ -4,7 +4,7 @@ import client.controller.gioco.ControllerApplicazione;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
-import utilità.GloboGrafico;
+import utilita.GloboGrafico;
 
 public enum NazioneAttaccoDA implements State{
 	

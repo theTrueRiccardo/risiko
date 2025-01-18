@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 import client.controller.pregioco.ControllerPreGioco;
 import client.view.gioco.GiocoGUI;
-import utilità.Musica;
+import utilita.Musica;
 
 public class OpzioneGUIConcreto implements OpzioneGUI {
 	

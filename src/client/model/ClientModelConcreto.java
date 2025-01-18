@@ -10,8 +10,8 @@ import java.util.StringTokenizer;
 import client.view.pregioco.*;
 import comune.Ascoltatore;
 import comune.Server;
-import utilità.Console;
-import utilità.ElementiDelGioco;
+import utilita.Console;
+import utilita.ElementiDelGioco;
  
 public class ClientModelConcreto implements ClientModel{
 	

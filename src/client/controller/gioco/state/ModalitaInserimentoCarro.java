@@ -5,25 +5,23 @@ import client.model.ClientModel;
 import client.model.Gioco;
 import client.view.gioco.GiocoGUI;
 import client.view.gioco.MappaGUI;
-import utilit‡.GloboGrafico;
+import utilita.GloboGrafico;
 
-public enum Modalit‡InserimentoCarroPre implements State{
+public enum ModalitaInserimentoCarro implements State{
 	
-	STATO_MODALITA_INSERIMENTO_CARRO_PRE;
+	STATO_MODALITA_INSERIMENTO_CARRO;
 
-	@Override
-	public void cliccatoBottoneFaseAttacco(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi andare nella fase attacco durante la fase preparatoria");
-	}
-
-	@Override
-	public void cliccatoBottoneFaseSposta(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi andare nella fase di spostamento durante la fase preparatoria");
-	}
+	
 
 	@Override
 	public void cliccataBandiera(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi posizionare bandiere durante la fase preparatoria");
+		Gioco gioco = controllerApplicazione.getGioco();
+		if(gioco.getArmateDisponibili()>10) {
+			controllerApplicazione.setStato(ModalitaInserimentoBandiera.STATO_MODALITA_INSERIMENTO_BANDIERA);
+		}
+		else {
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non hai sufficienti armate per posizionare una bandiera");
+		}
 	}
 
 	@Override
@@ -45,39 +43,50 @@ public enum Modalit‡InserimentoCarroPre implements State{
 		
 		String nomeNazione = globoGrafico.nazioneAlPunto(percx, percy);
 		
-		if(nomeNazione.equals("Mare")) {
-			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi inserire il carro in mare");
-		}
-		else if(!gioco.possiedeNazione(nomeNazione)) {
-			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi inserire il carro in una nazione non tua");
-		}
-		
-		else {
+		if(gioco.possiedeNazione(nomeNazione)) {
 			gioco.decrementaArmateDisponibili(1);
-			gioco.incrementaArmatePosizionateInFasePre();
 			clientModel.registraPosizionamentoArmata(gioco.getNomePartecipante(),percx, percy,gioco.getColoreArmate(), true, nomeNazione);
-			controllerApplicazione.setStato(Pre.STATO_PRE);
+			controllerApplicazione.setStato(Posizionamento.STATO_POSIZIONAMENTO);
+		}
+		else if(nomeNazione.equals("Mare")){
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi posizionare il carro in mare");
+		}
+		else {
+			controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi posizionare il carro in una nazione non tua");
 		}
 	}
 
 	@Override
 	public void cliccataMappaTastoDestro(ControllerApplicazione controllerApplicazione, double x, double y) {
-		//No op
+		//No op.
 	}
 
 	@Override
 	public void cliccatoAttacca(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi attaccare durante la fase preparatoria");
+		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");
+	}
+
+
+	@Override
+	public void cliccatoBottoneFaseAttacco(ControllerApplicazione controllerApplicazione) {
+		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");		
+	}
+
+	@Override
+	public void cliccatoBottoneFaseSposta(ControllerApplicazione controllerApplicazione) {
+		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");		
+		
 	}
 
 	@Override
 	public void cliccatoSposta(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Non puoi spostare durante la fase preparatoria");
+		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");		
+		
 	}
 
 	@Override
 	public void cliccatoPassa(ControllerApplicazione controllerApplicazione) {
-		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");
+		controllerApplicazione.getFinestraApplicazione().mostraMessaggio("Devi prima posizionare il carro");		
 	}
 
 	@Override

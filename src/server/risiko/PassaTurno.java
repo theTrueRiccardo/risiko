@@ -5,7 +5,7 @@ import java.util.BitSet;
 import java.util.HashSet;
 
 import server.Notificatore;
-import utilità.CustodiaCarte;
+import utilita.CustodiaCarte;
 
 public class PassaTurno extends AzioneAstratta{
 	

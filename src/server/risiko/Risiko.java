@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 
-import utilità.CustodiaCarte;
+import utilita.CustodiaCarte;
 
 public class Risiko {
 	
