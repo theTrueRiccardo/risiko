@@ -14,35 +14,35 @@ public class Raccoglitore {
 	private final String guerra = "guerra.wav";
 	
 	public URL prendiChitarra(){
-		return getClass().getClassLoader().getResource(chitarra);
+		return Raccoglitore.class.getResource(chitarra);
 	}
 	
 	public URL prendiDado() {
-		return getClass().getClassLoader().getResource(dado);
+		return Raccoglitore.class.getResource(dado);
 	}
 	
 	public URL prendiPanzers() {
-		return getClass().getClassLoader().getResource(panzers);
+		return Raccoglitore.class.getResource(panzers);
 	}
 	
 	public URL prendiPosizione() {
-		return getClass().getClassLoader().getResource(posizione);
+		return Raccoglitore.class.getResource(posizione);
 	}
 	
 	public URL prendiColtello() {
-		return getClass().getClassLoader().getResource(coltello);
+		return Raccoglitore.class.getResource(coltello);
 	}
 	
 	public URL prendiAnello() {
-		return getClass().getClassLoader().getResource(anello);
+		return Raccoglitore.class.getResource(anello);
 	}
 	
 	public URL prendiMessaggio() {
-		return getClass().getClassLoader().getResource(messaggio);
+		return Raccoglitore.class.getResource(messaggio);
 	}
 	
 	public URL prendiGuerra() {
-		return getClass().getClassLoader().getResource(guerra);
+		return Raccoglitore.class.getResource(guerra);
 	}
 
 }

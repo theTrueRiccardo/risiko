@@ -41,7 +41,7 @@ public class MappaGUIConcreto extends MappaGUI{
 		this.base=base; this.altezza=altezza;
 		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		setLayout(new BorderLayout());
-		mappa=new ImageIcon(getClass().getClassLoader().getResource(URL)).getImage();
+		mappa=new ImageIcon(MappaGUIConcreto.class.getResource(URL)).getImage();
 		
 	}
 	
