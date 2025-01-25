@@ -18,7 +18,7 @@ public class Risiko {
 			"egitto", "congo", "africa_orientale", "africa_del_sud", "madagascar", "alaska", 
 			"territori_del_nord_ovest", "groenlandia", "alberta", "ontario", "quebec", 
 			"stati_uniti_occidentali", "stati_uniti_orientali", "america_centrale", "venezuela", 
-			"perù", "brasile", "argentina", "islanda", "scandinavia", "gran_bretagna", 
+			"peru", "brasile", "argentina", "islanda", "scandinavia", "gran_bretagna", 
 			"europa_occidentale", "europa_meridionale", "ucraina", "europa_settentrionale", 
 			"indonesia", "nuova_guinea", "australia_orientale", "australia_occidentale"}));
 	
@@ -88,7 +88,7 @@ public class Risiko {
 		America_Del_Nord.set(nazioni.indexOf("america_centrale"));
 		
 		America_Del_Sud.set(nazioni.indexOf("venezuela"));
-		America_Del_Sud.set(nazioni.indexOf("venezuela"));
+		America_Del_Sud.set(nazioni.indexOf("peru"));
 		America_Del_Sud.set(nazioni.indexOf("brasile"));
 		America_Del_Sud.set(nazioni.indexOf("argentina"));
 		
